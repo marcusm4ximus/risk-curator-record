@@ -1,0 +1,740 @@
+@import "tailwindcss";
+
+:root {
+  --bg: #ffffff;
+  --fg: #000000;
+  color-scheme: light;
+}
+
+html.night {
+  --bg: #121211;
+  --fg: #ffffff;
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+}
+
+html.night,
+html.night body {
+  background: var(--bg);
+}
+
+body {
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+a,
+a:hover,
+a:focus,
+a:focus-visible {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea,
+option {
+  font: inherit;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  color: inherit;
+  background-color: var(--bg);
+}
+
+button {
+  cursor: pointer;
+}
+
+.shell {
+  width: min(980px, 100%);
+  height: 100vh;
+  height: 100dvh;
+  margin: 0 auto;
+  padding: 18px 16px 14px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+  background: var(--bg);
+}
+
+.title {
+  margin: 0;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  line-height: 1.3;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: none;
+  background: var(--bg);
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  border: 1px solid var(--fg);
+  padding: 0 8px;
+  text-decoration: none;
+  line-height: 1;
+  background: var(--bg);
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.nav-btn.current,
+.icon-btn.current {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.icon-btn {
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--fg);
+  background: var(--bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 0;
+  font-size: 15px;
+  font-style: italic;
+  line-height: 1;
+}
+
+.search-form {
+  position: relative;
+  z-index: 6;
+  margin: 0 0 10px;
+  background: var(--bg);
+}
+
+.search {
+  width: 100%;
+  border: 1px solid var(--fg);
+  border-radius: 0;
+  background: var(--bg);
+  padding: 8px 10px;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: 16px;
+  outline: none;
+  outline-offset: 0;
+  box-shadow: none;
+  appearance: none;
+}
+
+.search::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+::placeholder {
+  color: var(--fg);
+  opacity: 0.45;
+}
+
+.empty {
+  margin: 0;
+  padding: 22px 14px;
+  font-size: 14px;
+}
+
+.stage {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.home-page {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: var(--bg);
+}
+
+.page-fill {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+}
+
+.panel {
+  border: 1px solid var(--fg);
+  background: var(--bg);
+}
+
+.panel-fill {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+.curator-frame {
+  flex: none;
+  display: flex;
+  align-items: stretch;
+  background: var(--bg);
+}
+
+.curator-info {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  background: #ffffff;
+}
+
+.curator-frame.result-end-at-frame {
+  border-bottom-color: transparent;
+}
+
+.curator-frame.result-end-at-frame .scroll-controls {
+  box-shadow: inset 0 -1px var(--fg);
+}
+
+.curator-panel {
+  flex: 1;
+  min-width: 0;
+  height: calc(58px * 5 + 4px);
+  overflow: auto;
+  background: var(--bg);
+}
+
+.scroll-controls {
+  flex: none;
+  width: 28px;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--fg);
+  background: var(--bg);
+}
+
+.scroll-btn {
+  flex: 1;
+  border: none;
+  background: var(--bg);
+  color: var(--fg);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.scroll-btn + .scroll-btn {
+  border-top: 1px solid var(--fg);
+}
+
+.scroll-btn.current {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.scroll-btn:disabled {
+  cursor: default;
+}
+
+.scroll-btn:disabled span {
+  opacity: 0.28;
+}
+
+.scroll-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+  transform: none;
+}
+
+.scroll-stack > span {
+  display: block;
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+  transform: none;
+  font-size: 13px;
+  line-height: 1;
+  text-align: center;
+}
+
+.curator-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: 58px;
+  gap: 1px;
+  background: var(--fg);
+}
+
+.curator-grid.is-odd::after {
+  content: "";
+  background: var(--bg);
+}
+
+.curator-grid.has-result-end {
+  border-bottom: 1px solid var(--fg);
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 58px;
+  padding: 10px 14px;
+  border: none;
+  background: var(--bg);
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+}
+
+.card-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card-name {
+  font-size: 15px;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+}
+
+.card-count {
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+}
+
+.filters {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+  background: var(--bg);
+  position: relative;
+  z-index: 3;
+}
+
+.filter-control {
+  min-width: 0;
+  position: relative;
+}
+
+.filter-trigger {
+  width: 100%;
+  height: 34px;
+  border: 1px solid var(--fg);
+  border-radius: 0;
+  background: #ffffff;
+  color: inherit;
+  padding: 0 12px;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: 16px;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.filter-menu {
+  width: 100%;
+  min-width: 150px;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 5;
+  border-top: 0;
+  background: #ffffff;
+}
+
+.filter-incident .filter-menu {
+  width: 240px;
+  right: 0;
+  left: auto;
+}
+
+.filter-search {
+  display: block;
+  width: 100%;
+  height: 34px;
+  border: 0;
+  border-bottom: 1px solid var(--fg);
+  border-radius: 0;
+  background: #ffffff;
+  color: inherit;
+  padding: 0 12px;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: 15px;
+  outline: none;
+  appearance: none;
+}
+
+.filter-search::-webkit-search-cancel-button {
+  appearance: none;
+}
+
+.filter-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  max-height: calc(36px * 6 + 5px);
+  overflow: auto;
+  background: var(--fg);
+}
+
+.filter-row,
+.filter-empty {
+  border: 0;
+  background: #ffffff;
+  color: inherit;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: 15px;
+  line-height: 1.3;
+  text-align: left;
+}
+
+.filter-row {
+  display: block;
+  width: 100%;
+  flex: none;
+  min-height: 36px;
+  padding: 7px 14px;
+  text-decoration: none;
+}
+
+.filter-row.current {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+.filter-empty {
+  margin: 0;
+  padding: 14px;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--fg);
+  background: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+}
+
+html.night .meta {
+  background: #121211;
+}
+
+.box {
+  border: 1px solid var(--fg);
+  padding: 4px 8px;
+  font-size: 12px;
+  line-height: 1.3;
+  background: var(--bg);
+  color: inherit;
+  text-decoration: none;
+}
+
+.event {
+  border-bottom: 1px solid var(--fg);
+  background: var(--bg);
+}
+
+.row-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: var(--bg);
+  border: 0;
+  padding: 12px 14px;
+}
+
+.row-curator {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 3px;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+}
+
+.row-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: baseline;
+}
+
+.row-title {
+  font-size: 15px;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+}
+
+.row-date {
+  font-size: 12px;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+}
+
+.row-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin-top: 4px;
+  font-size: 12px;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+}
+
+.detail {
+  padding: 0 14px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  background: var(--bg);
+}
+
+.detail h3 {
+  margin: 0 0 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.sources li,
+.sources a {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+}
+
+.detail p,
+.prose p {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.prose section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.prose h3 {
+  margin: 0;
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.prose ul {
+  margin: 0;
+  padding: 0;
+  list-style-position: inside;
+  list-style-type: "- ";
+  font-family: ui-sans-serif, "Hiragino Sans", "Noto Sans JP", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.55;
+}
+
+.prose li {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 400;
+  line-height: inherit;
+}
+
+.prose strong {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+}
+
+.prose {
+  padding: 16px 14px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--bg);
+}
+
+html.night .curator-info,
+html.night .filter-trigger,
+html.night .filter-menu,
+html.night .filter-search,
+html.night .filter-row:not(.current),
+html.night .filter-empty {
+  background: #121211;
+}
+
+html:not(.night),
+html:not(.night) body,
+html:not(.night) .shell,
+html:not(.night) .top,
+html:not(.night) .header-controls,
+html:not(.night) .nav-btn:not(.current),
+html:not(.night) .icon-btn:not(.current),
+html:not(.night) .search-form,
+html:not(.night) .search,
+html:not(.night) .stage,
+html:not(.night) .home-page,
+html:not(.night) .page-fill,
+html:not(.night) .panel,
+html:not(.night) .curator-frame,
+html:not(.night) .curator-panel,
+html:not(.night) .scroll-controls,
+html:not(.night) .scroll-btn:not(.current),
+html:not(.night) .curator-grid.is-odd::after,
+html:not(.night) .card,
+html:not(.night) .filters,
+html:not(.night) .filter-trigger,
+html:not(.night) .filter-menu,
+html:not(.night) .filter-search,
+html:not(.night) .filter-row:not(.current),
+html:not(.night) .filter-empty,
+html:not(.night) .meta,
+html:not(.night) .box,
+html:not(.night) .event,
+html:not(.night) .row-btn,
+html:not(.night) .detail,
+html:not(.night) .prose,
+html:not(.night) .curator-info {
+  background-color: #ffffff;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 1px solid var(--fg);
+  outline-offset: 2px;
+}
+
+.search,
+.search:hover,
+.search:focus,
+.search:focus-visible,
+.search:active,
+.search:-moz-focusring {
+  outline: none;
+  outline-offset: 0;
+  box-shadow: none;
+  border: 1px solid var(--fg);
+}
+
+.filter-search,
+.filter-search:hover,
+.filter-search:focus,
+.filter-search:focus-visible,
+.filter-search:active {
+  outline: none;
+  outline-offset: 0;
+  box-shadow: none;
+  border: 0;
+  border-bottom: 1px solid var(--fg);
+}
+
+@media (max-width: 700px) {
+  .shell {
+    padding: 14px 12px 12px;
+  }
+
+  .top {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .title {
+    flex: 1 1 100%;
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+
+  .curator-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .curator-grid.is-odd::after {
+    content: none;
+  }
+
+  .filters {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-height: 640px) {
+  .shell {
+    height: 100dvh;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .panel-fill {
+    height: auto;
+    min-height: 0;
+    max-height: none;
+  }
+
+  .curator-panel {
+    height: calc(58px * 5 + 4px);
+    min-height: 0;
+    max-height: none;
+  }
+}

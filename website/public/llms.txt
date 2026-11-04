@@ -1,0 +1,1238 @@
+# Risk Curator Record
+path: /riskcuratorrecord/
+This is the incident record for deciding who is safe to lend to.
+A curator with no events is not proven safe.
+Incident prose comes from website/data/plain-events.json; event metadata and source URLs come from each curator merged.md EVENT block.
+
+CURATOR
+name: 9Summits
+slug: 9summits
+EVENT
+event_id: 9SUMMITS-20260322-RESOLV
+impact: Med
+fault: indirect
+type: collateral
+status: unresolved
+what_happened: |
+  Resolv was a delta-neutral stablecoin protocol. USR was its dollar token, while RLP was meant to absorb losses first. On 22 Mar 2026 a compromised mint key was used to issue unbacked USR. Morpho's donation path remained open and let 32 supply-on-behalf transactions route assets from 9Summits USDC into the impaired USR market.
+response: |
+  9Summits set the market cap to zero early on 22 Mar and later documented the 32 transactions. On 25 Sep the vault still reported 41,035.97 USDC in lost assets, so the loss remained unresolved.
+source_urls:
+- https://app.morpho.org/ethereum/vault/0x1E2aAaDcF528b9cC08F43d4fd7db488cE89F5741/9summits-usdc
+- https://oakresearch.io/en/analyses/investigations/the-resolv-usr-hack-curators-face-their-responsibilities
+- https://rekt.news/resolv-labs-rekt
+- https://chaoslabs.xyz/posts/defi-s-contagion-loop-when-risk-curators-become-the-risk
+- https://4pillars.io/en/issues/reflections-on-the-resolv-protocol-exploit
+END_EVENT
+EVENT
+event_id: 9SUMMITS-20260519-BNKRCAP
+impact: N
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Bankr was an AI trading agent, and BNKR was its utility token used as collateral. On 19 May 2026 Bankr reported compromised wallets and disabled transactions while 9Summits' fxUSD Agentic vault had an allocation to the BNKR market.
+response: |
+  9Summits set the BNKR supply cap to zero and removed the full allocation the same day. It said depositors were safe, and no loss was reported. The vault was sunset on 14 Jul.
+source_urls:
+- https://x.com/nine_summits/status/2056814422555795955
+- https://x.com/bankrbot/status/2056764771488436320
+- https://app.morpho.org/base/vault/0x85DfBE8C834aE0451613E58604E6E165Abb5c4Db/fxusd-agentic-stablecoin
+END_EVENT
+EVENT
+event_id: 9SUMMITS-20260630-YIELDETH
+impact: Low
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  YieldBasis ran leveraged Curve liquidity pools whose shares earned fees and rewards. Flagship ETH held staked cbBTC in legacy pools. Across two drawdowns, those pools fell below the value already recognized in the vault's share price.
+response: |
+  On 30 Jun 2026 9Summits moved the position to new pools, realizing the gap. It returned about 10.9 ETH of fees from its treasury. After the rebate, it reported an 8.35 ETH loss and a 0.43% share-price reduction. It said the YieldBasis position remained net positive overall.
+source_urls:
+- https://x.com/nine_summits/status/2071981485700284522
+- https://app.lagoon.finance/vault/1/0x07ed467acd4ffd13023046968b0859781cb90d9b
+END_EVENT
+EVENT
+event_id: 9SUMMITS-20260708-YIELDCBBTC
+impact: Med
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  YieldBasis ran leveraged Curve liquidity pools whose shares earned fees and rewards. Flagship cbBTC held about 108 cbBTC in one of those pools. Rewards from the legacy pool had already been counted in the vault's share price, but the pool carried a temporary redemption discount.
+response: |
+  On YieldBasis guidance, Tulipa Capital and 9Summits moved the position from 111.9263 to 108.506 cbBTC. On 8 Jul 2026 they disclosed that the remaining gap was 2.288 cbBTC and lent that amount to the vault for one year at 2%. This prevented a share-price reduction for depositors. The vault must repay 2.334 cbBTC.
+source_urls:
+- https://x.com/tulipacapital/status/2074959086433751217
+- https://x.com/nine_summits/status/2074963591631937661
+- https://app.lagoon.finance/vault/1/0xb09f761cb13baca8ec087ac476647361b6314f98
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: AlphaGrowth
+slug: alphagrowth
+events: none
+END_CURATOR
+
+CURATOR
+name: AlphaPing
+slug: alphaping
+EVENT
+event_id: ALPHAPING-20260620-MAINSTREET
+impact: High
+fault: direct
+type: collateral
+status: unresolved
+what_happened: |
+  MainStreet offered msY as the staked token for a market-neutral options box strategy, while msUSD was meant to be redeemable 1:1 for USDC. Alpha USDC Delta V2 was the Morpho vault lending USDC against msY. It launched on 14 Apr 2026, allowed borrowers to take USDC up to 86% of their collateral value, and was the only supplier to that market. The market used RedStone's MSY_FUNDAMENTAL/USD, a NAV feed rather than a trading price. Morpho's hourly history shows about $20.8M supplied at 12:00 UTC on 20 Jun, just before Accountable's announcement, while the vault held about $66.7M in total assets. Accountable ended its reserve verification agreement because MainStreet could not meet its standards. Markets had relied on the feed but outsiders could not inspect the reserves in detail, leaving real risks of fraud, missing reserves, inflated size or a sudden exit. The announcement set off a bankrun. People borrowed against the NAV and sold into thin liquidity, leaving the market fully borrowed and unable to liquidate. Crypto Briefing reported msY fell 70% to 85%, while msUSD, which was supposed to stay at $1, touched about $0.06 on 21 Jun and could not be redeemed normally. Morpho later marked supply at about $22.7M on 3 Jul and $25.6M on 9 Jul. Crypto Briefing and Yahoo described about $18M stuck after msY fell.
+response: |
+  MainStreet called the proof of reserves dashboard shutdown a reporting problem, not a solvency problem. On 21 Jun, AlphaPing said its vaults were isolated, there was no exposure across vaults, every other Alpha vault was unaffected and it was asking MainStreet for maturity dates. It did not rule out losses. On 22 Jun, it said only one vault was exposed and it had found no evidence of asset losses, describing withdrawal demand and liquidity constraints rather than confirmed impairment. That was not proof the vault was safe. On 26 Jun, AlphaPing said it was discussing liquidity and the price with MainStreet and the feed with RedStone. @YouAreMyYield said insiders appeared able to exit before the public note. Separately, two wallets redeemed about $8M at full value from 15 to 20 Jun while msUSD was still near $0.9995. On 3 Jul, MainStreet said the remaining box spreads kept the position above 100% collateralized if valued at expiry, were expected to mature at $1, and should return lenders' original USDC principal, with interest given up. That promise is not shown as paid. On 24 Jul, AlphaPing said claims would take more than seven months. On 1 Aug, it said the vault's MainStreet shares had been burned and warned that circulating claims pages were fake. On 28 Aug, it described contract upgrades for a planned recovery, a private creditor group, and unresolved matters, while refusing to promise an outcome. By 26 Sep, 85 days after the 3 Jul promise, AlphaPing had not reported any payment. Suppliers remained in an unpaid recovery, and the loans were economically bad debt.
+source_urls:
+- https://x.com/Main_St_Finance/status/2068432169140400252
+- https://x.com/Main_St_Finance/status/2073081791792218222
+- https://x.com/0xAlphaping/status/2068533411032256557
+- https://x.com/0xAlphaping/status/2069128171480572390
+- https://x.com/0xAlphaping/status/2070346371476127989
+- https://x.com/0xAlphaping/status/2083487144538992856
+- https://x.com/0xAlphaping/status/2080728412499448076
+- https://x.com/0xAlphaping/status/2093207470760141288
+- https://app.morpho.org/ethereum/vault/0x0bF0164D17469241B6E086dA4016DCc54FEAA334/alpha-usdc-delta-v2
+- https://www.webacy.com/blog/msusd-anatomy-of-a-stablecoin-that-was-built-to-lose-a-run
+- https://r.xyz/blog/mainstreet-project-autopsy-report-msusd-and-msy-token-depeg-incident
+- https://cryptobriefing.com/morpho-blue-vault-msy-collapse-loss/
+- https://protos.com/latest-defi-yield-vault-drama-wipes-out-69m-of-msusd-and-avlt-market-cap-1/
+- https://dropstab.com/coins/main-street-yield
+END_EVENT
+EVENT
+event_id: ALPHAPING-20260622-ALTURA
+impact: High
+fault: direct
+type: collateral
+status: unresolved
+what_happened: |
+  AVLT was Altura's yield-bearing vault share. Users deposited stablecoins and Altura deployed them across market-neutral trading, market making, and RWA strategies. AVLT represented their share and was meant to redeem back into stablecoins. Alpha USDT Prime was the HyperEVM Morpho vault that lent USD₮0 against AVLT. It went live on 27 Apr 2026, allowed borrowing up to 91.5% of LTV, used a Chainlink AVLT/USD feed and supplied that market. After the MainStreet shock, holders rushed to redeem even though Altura said it had no MainStreet exposure. Protos reported that AVLT fell 14%, from $1.09 to $0.93. Altura paused redemptions because onchain withdrawals were moving faster than its offchain positions could mature, then began an orderly wind-down. People who left early got liquidity while later users were left waiting. By 25 Sep, the Morpho market was fully borrowed with no liquidity and about $5.88M of unrealized bad debt against about $108k of collateral. Suppliers could not withdraw.
+response: |
+  AlphaPing kept a public monitoring note, described the real world asset unwind, and later separated mainnet repayment from HyperEVM. On 24 July 2026, AlphaPing said Altura was fully repaid on mainnet and that HyperEVM withdrawals were expected within about a week. Those sentences are not shown as done for the open HyperEVM vault. As of 26 September 2026, 64 days have passed, 2 months and 2 days. Altura's own later updates said a bank restriction on about £16.4M stalled the last conversion of its treasury into USDT. Those posts are about Altura's vault redemption. Altura said its HyperEVM lending market was unaffected. That line from the issuer was not checked again against the Morpho market, which was still illiquid.
+source_urls:
+- https://x.com/0xAlphaping/status/2070346371476127989
+- https://x.com/0xAlphaping/status/2080728412499448076
+- https://x.com/AlturaDeFi/status/2069457415318233361
+- https://protos.com/latest-defi-yield-vault-drama-wipes-out-69m-of-msusd-and-avlt-market-cap-1/
+- https://crypto-economy.com/altura-blames-restricted-bank-account-for-delays-in-final-vault-redemptions/
+- https://x.com/Ymaxapp/status/2071951008930890102
+- https://app.morpho.org/hyperevm/vault/0x242572d6f1AF7111bcA807ECDd0f74108cEAeD5d/alpha-usdt-prime
+END_EVENT
+EVENT
+event_id: ALPHAPING-20260710-AZND
+impact: High
+fault: direct
+type: collateral
+status: unresolved
+what_happened: |
+  AZND was Mu Digital's senior USD yield token, backed by a portfolio of Asian government and corporate credit. A junior muBOND tranche was meant to absorb losses first. Alpha USDC Asia V2 was the Morpho vault that lent USDC against AZND. It went live on 19 Mar 2026, allowed borrowing up to 86% of collateral value, used a fixed $1 oracle rather than a trading price, and supplied the market. On 10 Jul, Mu Digital announced an orderly wind-down after rising redemption requests and market uncertainty. AZND lost its peg, while the Morpho market remained fully borrowed and its oracle continued to value AZND at $1. Mu Digital said redemptions would move to an official claims portal and would not be guaranteed at par because recoverable assets, realized losses, and wind-down costs would determine the payout. The vault held about $7.36M on 24 Jul, but that was exposure. At the end of July, its reported assets went to zero, and its shares were burned after a claims snapshot. Suppliers were moved into a claims process with an unresolved loss. No reliable recovery percentage or dollar loss has been published.
+response: |
+  On 26 Jun, AlphaPing said Mu Digital's fund manager was unwinding the bonds and repayments were expected the following week. On 10 Jul, Mu Digital began the wind-down. A follow-up said an official portal was expected within 14 days and that payouts would depend on what could be recovered, not a guaranteed $1 redemption. On 24 Jul, AlphaPing said the snapshot had been taken. On 1 Aug, it said the vault's AZND shares had been burned and warned that circulating claims pages were fake. On 28 Aug, AlphaPing said outstanding matters were still unresolved and it would not promise outcomes before they were confirmed. It did not publish recovered dollars or a haircut percentage. As of 26 Sep, 78 days had passed since the wind-down began. No post showed depositors had been paid, and it was still unclear what they would get back.
+source_urls:
+- https://x.com/MuDigitalHQ/status/2075417387625832880
+- https://x.com/0xAlphaping/status/2070346371476127989
+- https://x.com/0xAlphaping/status/2080728412499448076
+- https://x.com/0xAlphaping/status/2083487144538992856
+- https://x.com/0xAlphaping/status/2093207470760141288
+- https://app.morpho.org/ethereum/vault/0x35Cbe8542E70fa2f7F9cDF129F19e593F4b4f560/alpha-usdc-asia-v2
+- https://app.mudigital.net/redemption
+- https://x.com/EthanDeFi_/status/2075583596396732868
+- https://matrica.io/community/mu-digital
+END_EVENT
+EVENT
+event_id: ALPHAPING-20260828-DELISTING
+impact: N
+fault: direct
+type: ops
+status: unresolved
+what_happened: |
+  On 28 Aug 2026, AlphaPing posted a section titled Morpho Delisting, after the losses in these series of events. It said duration based assets are hard to support in current DeFi systems, that some public criticism left out context, and that it would not argue in public. Morpho's curator search did not return an AlphaPing curator record on 25 Sep 2026.
+response: |
+  AlphaPing said recovery and user communication came first. It did not post a Morpho appeal.
+source_urls:
+- https://x.com/0xAlphaping/status/2093207470760141288
+- https://docs.morpho.org/get-started/resources/interface-listing-policy/
+- https://tradingstrategy.ai/vaults/curators/alphaping
+- https://app.morpho.org/curator/alphaping
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Anthias Labs
+slug: anthias-labs
+EVENT
+event_id: ANTHIAS-20260827-MAMO
+impact: High
+fault: indirect
+type: collateral
+status: unresolved
+what_happened: |
+  Mamo was an automated yield app on Base. MAMO was its utility token and was used as collateral in Moonwell's Core markets. On 27 Aug 2026, an actor inflated MAMO collateral accounting and pushed its price feed. The actor then borrowed cbBTC, WETH, USDC, and wstETH supplied to those markets.
+response: |
+  On 27 Aug, Moonwell cut the borrow caps on the borrowed assets and the MAMO supply cap to nominal amounts. On 28 Aug, Anthias published a post-mortem that put remaining borrower obligations at about $9.131M on Moonwell's oracle basis. Its 3 Sep update showed about $2.535M of Base USDC bad debt and 100% utilization. On 10 Sep, Anthias put bad debt at about $2.311M. On 17 Sep, it reported about $2.317M of gross exposure and average USDC utilization of 100%. One depositor reported withdrawing on 18 Sep, while another said on 19 Sep that only about $4,000 remained available. No Anthias post gave a final repayment amount, withdrawal plan, or haircut.
+source_urls:
+- https://forum.moonwell.fi/t/post-mortem-mamo-market-incident-on-base/2208
+- https://forum.moonwell.fi/t/anthias-labs-weekly-market-updates/1772?page=5
+- https://forum.moonwell.fi/t/governance-request-fair-withdrawal-mechanism-for-the-illiquid-base-musdc-market/2230
+- https://forum.moonwell.fi/t/formal-governance-request-treatment-of-post-incident-depositors-and-recovery-plan-for-the-base-musdc-core-market/2224
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Api3
+slug: api3
+events: none
+END_CURATOR
+
+CURATOR
+name: Apostro
+slug: apostro
+EVENT
+event_id: APOSTRO-20251104-SONICLOCK
+impact: Med
+fault: indirect
+type: collateral
+status: unresolved
+what_happened: |
+  Stream Finance ran yield vaults and issued xUSD. On 4 Nov 2025 it disclosed an external-manager loss and xUSD withdrawals stopped. Apostro USDC on Silo Sonic held wstkscUSD, whose underlying scUSD had been allocated to Euler vaults that lent against Stream assets. Trevee paused wstkscUSD redemptions, the wrapper lost its peg, and borrowed liquidity became locked.
+response: |
+  Apostro had pulled the remaining unborrowed liquidity the day before Stream's announcement. On 4 Nov it said this was its only affected vault and that it was working with partners on recovery. Apostro said liquidity in these markets was reduced from $2M to $0.377M that is temporarily locked. It later clarified that this liquidity had been moved to other markets, not paid to lenders in the locked sleeve. No later post showed a full withdrawal or recovery.
+source_urls:
+- https://x.com/apostroxyz/status/1985831893506326801
+- https://x.com/apostroxyz/status/1986173759590449270
+- https://web.archive.org/web/20260310032801/https://www.dtrinity.org/post/sonic-incident-post-mortem-next-steps
+- https://silofinance.medium.com/stream-finance-incident-transparency-report-cc21fb76f0b5
+- https://decrypt.co/347285/stream-finance-stablecoin-plunges-77-protocol-fund-manager-loses-93-million
+END_EVENT
+EVENT
+event_id: APOSTRO-20260322-RESOLVLOCK
+impact: Med
+fault: indirect
+type: collateral
+status: unresolved
+what_happened: |
+  Resolv was a delta-neutral stablecoin protocol. USR was its dollar token, while RLP was meant to absorb losses first. On 22 Mar 2026 a compromised key was used to mint about 80 million unbacked USR. Apostro's Morpho, Euler, and Silo vaults had lent stablecoins into Resolv-linked markets.
+response: |
+  On 23 Mar Apostro said it had secured the remaining liquidity, blocked new deposits, and closed donation paths. It reported $135,800 still locked across nine vaults and directed users to Resolv. No later post showed that the locked funds were paid.
+source_urls:
+- https://x.com/apostroxyz/status/2036168120499577009
+- https://app.morpho.org/ethereum/vault/0x214B47C50057eFaa7adc1B1C2608C3751Cd77D78/apostro-resolv-usdc
+- https://app.morpho.org/base/vault/0xcdDCDd18A16ED441F6CB10c3909e5e7ec2B9e8f3/apostro-resolv-usdc
+- https://resolv.xyz/blog/resolv-postmortem-march-22-2026-incident
+- https://chaoslabs.xyz/posts/defi-s-contagion-loop-when-risk-curators-become-the-risk
+- https://tradingstrategy.ai/trading-view/vaults/apostro-resolv-usdc
+- https://blog.credora.network/2026/04/03/morpho-vault-risk-rated-vs-unrated-vaults-during-the-resolv-exploit/
+- https://www.chainalysis.com/blog/lessons-from-the-resolv-hack/
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Architect
+slug: architect
+events: none
+END_CURATOR
+
+CURATOR
+name: Armitage by Wintermute
+slug: armitage-wintermute
+EVENT
+event_id: ARMITAGE-20260825-PTREUSD
+impact: N
+fault: indirect
+type: oracle
+status: resolved
+what_happened: |
+  On 8 Jul 2026, Armitage added the PT-reUSD-10DEC2026/USDC market (0x1e9d614631a7df0ec07fb05b2c8cb2491575fd1a63a33bf187a6afb295a4fc64, oracle 0x217d6DdCDB95112C51657F6270e8C079CFDB51f0) to the Select vault, allowing borrowing up to 91.5% LTV and setting a $5M cap, effectively replacing the expired June PT positions. Pendle Ecosystem USDC, curated by Armitage and launched on 4 Aug 2026, is subject to using only PT markets approved by Pendle. On 25 Aug 2026 between 04:37 and 04:51 UTC, YT-reUSD buying pushed the PT-reUSD price up 2.6%–3%. The Morpho oracle used for liquidation purposes sets price as the lower of a 15-minute TWAP or a price increasing linearly toward $1 as expiration nears; in this event, it used the lower value. Looped borrowers at the 91.5% loan limit were liquidated as a result. All reported liquidation events in the USDC market showed 0.00 realized and 0.00 unrealized bad debt after the incident, and this remained unchanged in later market reads. Pendle stated the oracle performed as intended and that the Pendle Ecosystem Vault was not impacted. (That refers to no lender or protocol bad debt, not necessarily to the absence of Armitage-supplied funds.) As of 15 Sep 2026, Pendle Ecosystem USDC supplied approximately $34.1M (55.9% of its vault, 33.6% of the market). Wintermute USDC Select supplied $8.63M (19.5% of Select vault, $10M cap) and Wintermute USDT Select supplied $1.33M to a related USDT market. No available source shows an Armitage vault share price wiped out.
+response: |
+  There was no Armitage update about the incident after 13 Aug 2026, the date PT-USDG was added to the forum thread, and no Armitage or Wintermute incident post from 25 Aug was found. Steakhouse, another supplier to the affected markets, publicly stated it withdrew following the incident and later resumed supplying, a point reported by CoinDesk. It remains unclear if Armitage itself withdrew, as live vault caps and allocations show consistent exposure following the event. Afterward, Armitage's allocation exceeded the original $5M Select cap (which was later raised to $10M), and the Pendle Ecosystem vault maintained a $60M absolute cap for that market.
+source_urls:
+- https://forum.morpho.org/t/introducing-armitage-by-wintermute-vaults-on-morpho/2269
+- https://app.morpho.org/ethereum/market/0x1e9d614631a7df0ec07fb05b2c8cb2491575fd1a63a33bf187a6afb295a4fc64
+- https://app.morpho.org/ethereum/vault/0x55C1B6e461a6334B567bAF0FEb5D728715446f05/pendle-ecosystem-usdc
+- https://app.morpho.org/ethereum/vault/0xA2EAaD0D586cF9FD73bb2c09cF6A7E3e187D68cd/wintermute-usdc-select
+- https://armitage.wintermute.com/docs/vaults/ecosystem
+- https://www.coindesk.com/tech/2026/08/25/a-3-token-move-just-triggered-usd36-million-in-ethereum-defi-liquidations
+- https://thedefiant.io/news/defi/pendle-oracle-move-liquidates-usd36-million
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: August Digital
+slug: august-digital
+EVENT
+event_id: AUGUSTDIGITAL-20260322-RESOLV
+impact: High
+fault: indirect
+type: collateral
+status: unresolved
+what_happened: |
+  Resolv was a delta-neutral stablecoin protocol. USR was its dollar token, while RLP was meant to absorb losses first. August AUSD V1 lent AUSD against RLP at an 86% liquidation threshold. On 22 Mar 2026 a compromised mint key was used to issue unbacked USR. RLP collateral then lost most of its value while the AUSD loan remained outstanding.
+response: |
+  August set the RLP supply cap to zero on 22 Mar, but the position did not leave the market. On 25 Sep the vault reported 674,379.425 AUSD in lost assets, with remaining deposits unable to exit. Morpho valued the loss at $674,132. No make-whole was found.
+source_urls:
+- https://app.morpho.org/ethereum/vault/0x9B7cca326004967f9D2B7cF5F2328d82cF65b302/august-ausd
+- https://app.morpho.org/ethereum/market/0x4b86442549b52826e0fc11770ec5154450cb3c5c14dc751a761d81dcfbe7a7b2
+- https://chaoslabs.xyz/posts/defi-s-contagion-loop-when-risk-curators-become-the-risk
+- https://x.com/defidada16/status/2053983968014299558
+END_EVENT
+EVENT
+event_id: AUGUSTDIGITAL-20260611-SHAREBREAK
+impact: Med
+fault: indirect
+type: other
+status: unresolved
+what_happened: |
+  Between 4 and 11 Jun 2026, August AUSD V2's share price fell from 1.066207 to 0.977610 while its TVL fell from about $8.04 million to $4.27 million. The loss of accrued value pushed the share price below 1.
+response: |
+  August did not publish a cause, explanation, rebate, or cap change. By 25 Sep the share price was still about 0.978 and TVL was about $18, so the loss had not recovered.
+source_urls:
+- https://app.morpho.org/ethereum/vault/0xE7F8Fb5CccC3e70B922FE696ae6B550557f88Da5/august-ausd-v2
+- https://tradingstrategy.ai/vaults/august-ausd-v2
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Avantgarde Finance
+slug: avantgarde
+EVENT
+event_id: AVANTGARDE-20251104-ELIXIR
+impact: Med
+fault: direct
+type: collateral
+status: unresolved
+what_happened: |
+  Elixir issued deUSD as a synthetic dollar, with sdeUSD as its staked version. Elixir had lent heavily to Stream Finance. On 4 Nov 2025 Stream halted withdrawals after an external-manager loss, and on 6 Nov Elixir halted deUSD minting and redemption. Avantgarde USDC Core had lent about 2% of its assets into the sdeUSD market. Stream stopped repaying, the market became fully borrowed, and accrued interest inflated the value shown for the distressed sleeve.
+response: |
+  Avantgarde closed the supply queue and moved about 98% of the vault's liquid assets to Aave. It left the distressed sleeve in a side pocket and processed redemptions without counting that sleeve. Its 29 Apr 2026 post said recovery remained off-chain and uncertain. No later payment on the sleeve was found.
+source_urls:
+- https://avantgarde.finance/post/capital-stewardship-on-morpho-why-risk-comes-before-reward
+- https://gov.gitcoin.co/t/sgtm-004-generating-yield-on-dao-treasury-assets-to-support-runway/20217/27
+- https://app.morpho.org/ethereum/vault/0x5b56F90340dBAa6a8693DADb141D620f0e154fE6/avantgarde-usdc-core
+- https://forum.morpho.org/t/avantgarde-finance-vault-curation/1878
+- https://x.com/elixir/status/1986443495351927257
+- https://www.dune.com/milt_frid/nov2025-depeg-incident-in-morpho
+- https://www.theblock.co/news/markets/2025-11-06-elixir-sunsets-deusd-synthetic-stablecoin-following-stream-finance-unwinding-aims-full-redemptions-377961
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Bitwise
+slug: bitwise
+events: none
+END_CURATOR
+
+CURATOR
+name: Clearstar
+slug: clearstar
+EVENT
+event_id: CLEARSTAR-20250525-CUSDOORACLE
+impact: Low
+fault: direct
+type: oracle
+status: resolved
+what_happened: |
+  On 25 May 2025 at 23:29:09 UTC, an attacker manipulated the Aerodrome cUSDO/USDC sAMM liquidity pool price oracle. That oracle was used by a Morpho market in the Clearstar OpenEden USDC vault, now Clearstar USDC Reactor, 0x1D3b1Cd0a0f242d598834b3F2d126dC6bd774657. The attack transaction is https://basescan.org/tx/0xd8c4f742e223735abdc4ee7df0c0d608430d04ac0d4e696f7b6d48a2e56ca2ba. The oracle valued the token from raw pool reserves plus a fixed assumption that USDO was worth $1. USDC used a Chainlink price. cUSDO used the ERC-4626 vault conversion. The oracle did not account for swap fees or reserve distortion during a flash loan swap. The borrower took a flash loan of 6,666,666.67 USDC. A helper contract posted liquidity so the same wallet was not lender and borrower at the same time. The attacker inflated the reported pool price, then collapsed it, borrowed more than the real collateral supported, liquidated the position themselves, and left realized bad debt on that market.
+response: |
+  The next day, Clearstar posted a writeup on the Morpho forum. The market was set so it could only be closed, and allocations were set to 0. They said the Morpho contracts behaved as designed, and that the fault was in how the liquidity pool oracle was curated. Clearstar's headline figure is 49,303.14 USDC of bad debt, and they said it was fully compensated. On 26 May 2025 at 20:35:57 UTC, a coverage transaction deposited 49,304 USDC into the vault: https://basescan.org/tx/0x9a75859269b437c633e3958b8d6af04942dc53d087f212fa5499edd27bcea02e.
+source_urls:
+- https://forum.morpho.org/t/post-mortem-aerodrome-cusdo-usdc-amm-lp-oracle-manipulation-on-morpho-lending-market/1794
+- https://basescan.org/tx/0xd8c4f742e223735abdc4ee7df0c0d608430d04ac0d4e696f7b6d48a2e56ca2ba
+- https://basescan.org/tx/0x9a75859269b437c633e3958b8d6af04942dc53d087f212fa5499edd27bcea02e
+- https://forum.morpho.org/t/announcing-clearstar-openeden-usdc-vault-exclusive-collaboration-boosted-rewards/1615
+- https://app.morpho.org/base/vault/0x1D3b1Cd0a0f242d598834b3F2d126dC6bd774657/clearstar-usdc-reactor
+END_EVENT
+EVENT
+event_id: CLEARSTAR-20260322-RESOLVRLP
+impact: High
+fault: indirect
+type: collateral
+status: unresolved
+what_happened: |
+  Resolv was a delta-neutral stablecoin protocol. USR was its primary stablecoin, while RLP was the junior tranche designed to take losses first. On 22 Mar 2026, Resolv's offchain mint signer was compromised, enabling the creation of large amounts of unbacked USR and causing USR to lose its peg. RLP, as the junior token, was damaged and became difficult to trade. Clearstar had originally listed RLP in OpenEden markets in March 2025 and still held RLP in its Yield USDC vaults at the time of the incident. Clearstar Yield USDC on Ethereum had 1,000,652 USDC of direct RLP exposure. USDC Reactor on Ethereum was exposed to about 294,100 USDC of wstUSR, held indirectly via mAPOLLO and PT-mAPOLLO. USDC Reactor on Base had about 91,780 USDC of indirect RLP via yoUSD. High Yield USDC on Arbitrum had 4,320 USDC in direct RLP. Sentora later included Clearstar among curators whose Resolv-related impact was under $1M. No primary source documents a final realized net dollar loss after recovery. As of 15 September 2026, Clearstar’s Ethereum V2 Yield vault still showed $0 withdrawable, about $557k total assets in one adapter, and Morpho flagged warnings for both low liquidity and not being whitelisted.
+response: |
+  Clearstar posted on the same day, 07:58 UTC, noting that Yield USDC on Morpho had RLP exposure and the market was illiquid. They stated RLP was not intended as coverage for smart contract risk. Within hours, Clearstar blocked deposits to affected vaults, prioritized automated withdrawals from RLP markets, and later reopened Reactor vaults as yoUSD and mAPOLLO regained liquidity. The Base Reactor vault reopened with a 2.91% withdrawal fee, while Yield USDC on Ethereum and High Yield on Arbitrum remained locked pending RLP status. On 24 March, they announced that all vaults except Ethereum Yield (with continued RLP exposure) were resuming. By 30 March, eight days post-incident, no concrete RLP recovery process had begun, but Clearstar communicated efforts to press Resolv's terms of service on redemptions. On 23 June 2026, Clearstar reported reaching an agreement with Resolv for distributing recovery proceeds in USDC via Merkl to eligible depositors. As of 26 September 2026, 95 days (3 months and 3 days) had passed, and funds from this arrangement were not confirmed as paid. Chaos Labs, via Omer Goldberg, listed about $1.00M in exposure for Clearstar Morpho USDC on Ethereum mainnet (including Yield and Reactor). Spearmint, on 24 March 2026, reported that Clearstar had disabled normal V2 withdrawals, leaving approximately $2M of V2 deposits inaccessible via standard methods, and initiated a 48-hour RLP removal queue projected to realize around $1M as bad debt. Spearmint also described that forceDeallocate remained operable, allowing some, such as juan.hl, to manually exit. Depositors, including Mark (@markbaghdady), said that, from May to June 2026, funds had remained locked for weeks, whereas Gauntlet had already completed a Resolv agreement. Rekt tracked the Clearstar Yield USDC vault among those with $10k+ of liquidity impact. Separately, after the Resolv event, Clearstar continued allocating the Re Ecosystem Vault to PT-reUSD and reUSD markets, which later experienced a liquidation wave caused by oracle manipulation.
+source_urls:
+- https://x.com/ClearstarLabs/status/2035627098551746751
+- https://x.com/ClearstarLabs/status/2036020661911503182
+- https://x.com/ClearstarLabs/status/2036348707470205244
+- https://x.com/ClearstarLabs/status/2038584706560659782
+- https://x.com/ClearstarLabs/status/2069493588405203389
+- https://forum.morpho.org/t/announcing-clearstar-openeden-usdc-vault-exclusive-collaboration-boosted-rewards/1615
+- https://sentora.com/research/articles/the-resolv-hack-25m-from-a-single-compromised-key
+- https://x.com/chaoslabs/status/2036145976952365218
+- https://x.com/0xSpearmint/status/2036358837658431586
+- https://www.theblock.co/post/394582/resolvs-usr-stablecoin-depegs-after-attacker-mints-80-million-unbacked-tokens-extracts-roughly-25-million
+- https://docs.morpho.org/curate/concepts/security-considerations/
+- https://app.morpho.org/ethereum/vault/0x9B5E92fd227876b4C07a8c02367E2CB23c639DfA/clearstar-yield-usdc
+END_EVENT
+EVENT
+event_id: CLEARSTAR-20260825-REORACLE
+impact: N
+fault: indirect
+type: oracle
+status: resolved
+what_happened: |
+  Clearstar curates the Re Ecosystem Vault on Morpho, which launched in December 2025. PT-reUSD for the December 2026 maturity was added on 24 June 2026. On 25 August 2026 at 05:33 UTC, Defi Crime Watch reported an oracle manipulation attack in the Morpho PT-reUSD market, describing how a newly funded wallet (0x854e3f3b521dbae34cb111ebef0dce41d8b5690d) bought YT tokens and triggered liquidations against looped positions. Clearstar responded publicly that morning, stating they were investigating the event and that no bad debt was created; the Morpho V2 Re Ecosystem Vault share price, they said, was unaffected by the liquidations.
+response: |
+  Clearstar made one public reply. They said the vault had no bad debt and that the share price was not hit.
+source_urls:
+- https://x.com/ClearstarLabs/status/2092134333976830231
+- https://x.com/ClearstarLabs/status/2069867189499285897
+- https://x.com/deficrimewatch/status/2092123224637112681
+- https://app.morpho.org/ethereum/vault/0xD1E9242e075Db4bdd3f3c721D7d5fd4180A94A7e/re-ecosystem-vault
+END_EVENT
+EVENT
+event_id: CLEARSTAR-20260904-VESU
+impact: Low
+fault: indirect
+type: oracle
+status: unresolved
+what_happened: |
+  Clearstar has curated a Vesu pool since 28 January 2026. On 4 September 2026 a Pragma price fault liquidated positions.
+response: |
+  On 13 Sep 2026 Vesu said recovered assets are held by Vesu, Re7 Labs, and Clearstar, and that each curator refunds its own pool. Vesu's recommended rate was 95%. Pragma's 17 Sep 2026 note, still the latest section when read on 26 Sep 2026, says Vesu had not announced that every curator refund was finished.
+source_urls:
+- https://docs.vesu.xyz/blog/2026-09-13-incident-refunds
+- https://www.pragma.build/updates/vesu-incident
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Flowdesk
+slug: flowdesk
+events: none
+END_CURATOR
+
+CURATOR
+name: Galaxy Curation
+slug: galaxy-curation
+events: none
+END_CURATOR
+
+CURATOR
+name: Gauntlet
+slug: gauntlet
+EVENT
+event_id: GAUNTLET-20240424-EZETH
+impact: Low
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Renzo was a liquid restaking protocol, and ezETH was its restaked ETH token used as collateral. Gauntlet was the main risk curator for Renzo. On 24 Apr 2024, from 02:25 UTC, ezETH liquidity on exchanges thinned and the ezETH to WETH oracle price fell below 1.0. The first liquidation was at 02:29:47 UTC, in block 19722269. By 02:52:35 UTC, 145 of 146 liquidations had happened. The market with an 86% liquidation threshold built 10.96 WETH of debt that the collateral did not cover. The 77% market built no unpaid debt. Before the event, Gauntlet had about 5,000 WETH in the 86% market, about 2,000 WETH in the 77% market, and 400 WETH in the 62.5% market. Gauntlet LRT Core supplied about 65% of the roughly 7,600 WETH in the 86% market, so 7.12 WETH of that loss was shared with the vault. Afterward, Gauntlet moved WETH out of the 86% market into the 77% and 62.5% markets.
+response: |
+  On the day after the incident, Gauntlet published a post on the Morpho forum detailing the number of liquidations that occurred, the methodology used to allocate losses among depositors, and noted that depositors in the vault before 22 Apr 2024 at 11:27 UTC experienced a net positive result. Gauntlet highlighted that LRT Core involved higher risk compared to WETH Prime and chose not to pause the vault. Subsequent updates to Gauntlet's vault documentation continued to reference the 7.12 WETH figure, the 11 basis point impact, and noted the renaming of LRT Core and Balanced to WETH Balanced. Separately, Marc Zeller publicly characterized this event as a significant error on Gauntlet's part.
+source_urls:
+- https://forum.morpho.org/t/gauntlet-lrt-core-vault-market-update-4-24-2024-ezeth-price-volatility/578
+- https://vaultbook.gauntlet.xyz/resources/market-volatility
+- https://www.thebigwhale.io/article/risk-curators-at-the-heart-of-loan-market-management-at-defi
+- https://protos.com/depeg-of-3b-restaking-token-ezeth-causes-over-60m-in-defi-liquidations/
+- https://app.morpho.org/ethereum/vault/0x4881Ef0BF6d2365D3dd6499ccd7532bcdBCE0658/gauntlet-lrt-core
+END_EVENT
+EVENT
+event_id: GAUNTLET-20250109-USD0
+impact: N
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Usual issued USD0 as a dollar token. USD0++ was its yield-bearing, locked version used as collateral. On 9 Jan 2025, Usual ended the instant 1:1 redemption of USD0++ for USD0, replacing it with a much lower floor around $0.87 and imposing a four-year waiting period for redemptions. This caused the USD0++ price to fall away from $1. In Morpho, the markets for USD0 and USD0++ had fixed prices at $1, referencing Chainlink, rather than market prices. USD0 and USD0++ exposure was only present in the Gauntlet USDC Balanced vault (later called Core).
+response: |
+  Nine transactions, from 21:46 UTC on 9 Jan 2025 to 04:02 UTC on 10 Jan 2025, withdrew all funds from the affected markets. Gauntlet said there was no unpaid debt. Tarun Chitra told Blockworks that Gauntlet had no advance notice, and that Usual's documents were updated before those transactions.
+source_urls:
+- https://vaultbook.gauntlet.xyz/resources/market-volatility
+- https://x.com/gauntlet_xyz/status/1877825680756613372
+- https://blockworks.co/news/usual-depeg-spurs-defi-instability
+- https://leviathannews.substack.com/p/collateral-damage-usd0-depeg-leaves
+END_EVENT
+EVENT
+event_id: GAUNTLET-20250221-BYBIT
+impact: N
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Ethena created USDe as a synthetic dollar and sUSDe as its staked, yield-bearing token, with Pendle principal tokens representing fixed maturity claims on those assets. On 21 Feb 2025, Bybit suffered a security breach via a compromised Safe website. Gauntlet had previously listed Pendle principal tokens potentially exposed to Ethena protocol risks. After Ethena clarified that its exchange profit and loss had been reduced to $0 and that no USDe or sUSDe collateral was held on Bybit, Gauntlet withdrew $28.9M from Morpho markets connected to Ethena tokens, specifically, $16.7M of PT-sUSDE/USDC from USDC Balanced and $12.2M (PT-USDe and PT-sUSDE) from DAI Balanced. Gauntlet reported no unpaid bad debt, began independently verifying Safe transaction hashes, and stopped relying on the compromised Safe UI. No user vault assets were lost as a result of the Bybit incident.
+response: |
+  After Ethena said its exchange profit and loss went to $0, and that no backing sat on Bybit, Gauntlet moved $28.9M out of Morpho markets that could touch Ethena. That was $16.7M of PT-sUSDE against USDC in USDC Balanced, and $12.2M of PT-USDe and PT-sUSDE in DAI Balanced. Gauntlet said there was no unpaid debt. They added an internal check of Safe transaction hashes, so they would not trust the compromised site.
+source_urls:
+- https://vaultbook.gauntlet.xyz/resources/market-volatility
+END_EVENT
+EVENT
+event_id: GAUNTLET-20260322-RESOLVUSR
+impact: High
+fault: indirect
+type: collateral
+status: unresolved
+what_happened: |
+  At 02:21:35 UTC on 22 Mar 2026, a transaction minted 50M USR. At 03:41 UTC, another transaction minted 30M more. Resolv's account said a supply chain attack ran from GitHub and the build system into an AWS key policy, abusing a role called SERVICE_ROLE. The contract had no cap on minting. USR and wstUSR crashed on exchanges. Morpho markets still marked USR, wstUSR, and RLP near $1, using a fixed price or a stated asset value. Chaos Labs, OAK, and Rekt said Morpho's Public Allocator then pushed USDC into markets that were already broken, and that about 96% of the Morpho flow after the exploit went to Gauntlet. On 23 Mar 2026 at 13:00 ET, Chaos Labs put Gauntlet Mainnet Core and Frontier at about $6.05M, ExtraFi Base at about $433k, Seamless Base at about $382k, and the Resolv Morpho USDC vault at about $1.02M. Gauntlet's own figures were $4.95M in Core for wstUSR against USDC, $1.09M of wstUSR in Frontier, $479k of PT-RLP-9APR2026, and $374k of RLP, plus a partner Resolv USDC vault at about $1.03M. Deposits were disabled and caps were set to 0. These figures are exposures. The same day, Euler Labs, with Gauntlet still curator for the DAO, disabled RLP on Arbitrum Yield and stopped Earn USDC allocations. About $500k of USDC against RLP was later paused.
+response: |
+  Gauntlet's first public comment, around 05:24 UTC on 22 Mar 2026, stated that most vaults were unaffected but a few high yield vaults had limited exposure. D2 Finance shared a Morpho screenshot with $4.95M in Core wstUSR, treating Core as the flagship vault. Gauntlet subsequently published its market exposures, set market caps to zero, and began discussions with Resolv. On 23 Mar, Gauntlet said it was working on a compensation plan and was confident of recovery via Resolv. On 26 Mar, they announced that Base USDC Core and Mainnet Frontier V2 were off Resolv markets and neither had bad debt. By 1 Apr, no remediation plan from Resolv had been presented. Afterwards, Gauntlet force-removed Core wstUSR, three Frontier markets, Seamless and Extrafi USR, and Resolv USDC following the timelock. On 3 Jun 2026, Gauntlet announced users could claim 4,379,827 USDC on Merkl, immediately for USDC Core and for some illiquid v1.1 vaults, but only when illiquid for USDC Frontier and Seamless. That same day, Gauntlet added: "No further distributions are expected at this time. If further claims are available to users related to this incident, we will communicate through our official channels." There is no public evidence the remaining claims were paid. Gauntlet said Prime and USD Alpha vaults were unaffected. Multiple third-party reports, including by Chaos Labs, Omer Goldberg, OAK, Four Pillars, and The Defiant, critiqued curator conduct during the exploit. Several depositors commented under the 3 Jun claim post that the claimable amount was roughly half their original deposits, and less than the 0.71 recovery figure cited by Resolv. Subsequent user reports through 3 Sep 2026 continued to note locked deposits or zero claimable Merkl balance. There is no follow-up from Gauntlet in the forum thread showing further distributions to cover the difference, or that Frontier and Seamless claims became available.
+source_urls:
+- https://resolv.xyz/blog/resolv-postmortem-march-22-2026-incident
+- https://docs.morpho.org/curate/concepts/security-considerations/
+- https://x.com/gauntlet_xyz/status/2035893955666256054
+- https://x.com/gauntlet_xyz/status/2036162856518099115
+- https://x.com/gauntlet_xyz/status/2037035536351941068
+- https://x.com/gauntlet_xyz/status/2062185818698223704
+- https://x.com/gauntlet_xyz/status/2062222947117343026
+- https://app.morpho.org/ethereum/vault/0x8eB67A509616cd6A7c1B3c8C21D48FF57df3d458/gauntlet-usdc-core
+END_EVENT
+EVENT
+event_id: GAUNTLET-20260418-RSETH
+impact: N
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Kelp was a liquid restaking protocol, and rsETH was its restaked ETH token used as collateral. On 18 Apr 2026, a forged LayerZero message from Unichain to Ethereum released about 116,500 rsETH that Kelp's OFT bridge adapter did not have backing for. The attacker looped that unbacked rsETH as collateral on Aave, Compound, and Euler. That leveraged loop is not included in the impact to Gauntlet's Morpho allocations.
+response: |
+  On 19 Apr 2026, a Gauntlet LinkedIn post said they had no exposure to rsETH. The detailed account is the 23 Apr 2026 curator note, quoted on the Compound forum. It said direct Morpho and Aera exposure was not material and sat only in higher risk positions: about 10 rsETH in one higher yield WETH vault on Unichain, about 2.1% of that vault, and 0.48 ETH in a mainnet PT-agETH market through Index Coop hyETH, about 0.2%. Prime held no rsETH, because liquidity was thinner, liquidity providers were concentrated, and the track record was short. Gauntlet set caps on Kelp related assets to 0, exited those allocations, and also set precautionary caps to 0 on other restaking tokens and on stablecoins that pay a yield where an infrastructure link was plausible. Gauntlet said there were no user losses and no bad debt across more than 50 Morpho and Aera vaults.
+source_urls:
+- https://x.com/gauntlet_xyz/status/2047328707082100805
+- https://www.comp.xyz/t/rseth-oracle-migration-and-temporary-liquidation-pause-on-ethereum-weth-and-wsteth-markets/7772
+- https://www.linkedin.com/posts/gauntlet-xyz_a-curator-perspective-how-gauntlet-handled-activity-7453126193253642242-atpy
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Hakutora
+slug: hakutora
+events: none
+END_CURATOR
+
+CURATOR
+name: Hyperithm
+slug: hyperithm
+EVENT
+event_id: HYPERITHM-20251104-STREAMXUSD
+impact: High
+fault: direct
+type: collateral
+status: unresolved
+what_happened: |
+  Stream Finance ran yield vaults, and xUSD was its yield-bearing dollar token used as collateral. On 4 Nov 2025, Stream Finance disclosed losses at an external manager and froze deposits and withdrawals. xUSD lost its peg. The same day, Hyperithm said mHYPER and its Morpho and Euler vaults had no xUSD, except the Hyperithm USDT0 Lending Vault on Euler on Plasma. That vault still had $2.6M in an xUSD to USDT0 market, and the funds could not be withdrawn for lack of liquidity. Separately, they said Stream held about $75M of leveraged mHYPER, and that Hyperithm and Midas would help unwind it. By 11 Nov 2025, they said the Hyperithm Euler USDT Earn Vault on Plasma had about 30% in the Re7 xUSD Lending Vault, where a loss was possible, and about 70% in the healthy mHYPER Hyperithm Lending Vault. Withdrawals were paused on both. They did not publish a dollar figure for the Earn vault at that time. They had publicly said xUSD was removed, but this vault still held a third party xUSD and Re7 position. Redemptions froze, and the remaining slice is unresolved. On 7 Nov 2025, Arbitrum DRIP blacklisted Hyperithm USDC from rewards out of caution.
+response: |
+  The same day, Hyperithm posted their own numbers across Morpho and Euler vaults. They later announced a 70%/30% split, offered a dispute process, published an allocation spreadsheet, specified special provisions for Beefy and deBridge participants, and distributed the 70% portion. They repeatedly stated that other Hyperithm vaults were unaffected. The 30 Nov 2025 update confirmed distribution of the 70% portion with a linked Plasmascan transaction, indicating completion of that distribution. Posts from 11, 16, and 26 Nov 2025 clarify that the remaining approximately 30% represents a contingent right to potential future recovery from the Re7 xUSD vault, dependent on the Stream legal process. This constitutes a promise of potential later recovery, not an actual payment. There was no evidence that the 30% portion was paid.
+source_urls:
+- https://x.com/hyperithm/status/1985545281279311982
+- https://x.com/hyperithm/status/1985572273240302023
+- https://x.com/hyperithm/status/1988124642918494642
+- https://x.com/hyperithm/status/1990034616774779295
+- https://x.com/hyperithm/status/1993603528984789344
+- https://x.com/hyperithm/status/1995072076638540047
+- https://t.me/s/curation_hyperithm
+- https://plasmascan.to/tx/0xc0ba9e0f995e6db888e224676a106f82dd32af0ed60da340086b9c02de010deb
+- https://app.euler.finance/vault/0x66bE42a0BdA425A8C3b3c2cF4F4Cb9EDfcAEd21d?network=plasma
+- https://app.euler.finance/vault/0xF675FBe777E992f5D5D84AdF41161dC0f20104a6?network=plasma
+- https://forum.arbitrum.foundation/t/update-stream-finance-xusd-situation-and-impact-assessment/30206
+- https://www.coindesk.com/markets/2025/11/04/stream-finance-faces-usd93-million-loss-launches-legal-investigation
+- https://protos.com/stream-finance-meltdown-winners-and-losers-in-defi-risk-curator-reckoning/
+- https://github.com/yearn/risk-score/blob/master/reports/report/midas-mhyper.md
+END_EVENT
+EVENT
+event_id: HYPERITHM-20260418-RSETH
+impact: High
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Kelp was a liquid restaking protocol utilizing rsETH as its restaked ETH collateral. Hyperithm managed the Midas mHyperETH vault, which used an Aave loop based on rsETH, and Hyperithm's ETH Apex supply queue also interacted with related rsETH markets. At approximately 17:35 UTC on 18 Apr 2026, a LayerZero message, validated by only one verifier, enabled the release of about 116,500 unbacked rsETH. Hyperithm's monitors detected the anomaly 13 minutes later. Hyperithm notified Kelp at 29 minutes, initiated mHyperETH unwind at the 40-minute mark, and Kelp blocked transfers after 48 minutes. By 18:08 UTC, Hyperithm had drained the ETH Apex supply queue; by 18:22 UTC, it removed liquidity from agETH and mHyperETH positions. On 20 Apr, Hyperithm stated its flagship and stablecoin vaults had no direct rsETH exposure, but acknowledged about $3.5M in net rsETH exposure within mHyperETH, out of $11.5M in assets. While reviewing asset values, issuance and redemption for mHyperETH were paused; other Midas vaults reopened on 21 Apr, but mHyperETH stayed paused. Further updates on queue closures came on 24 and 30 Apr. On 27 May, Hyperithm published the incident's full timeline. No later announcement confirmed a resumption of mHyperETH redemptions.
+response: |
+  On 20 Apr, Hyperithm listed the vaults it considered unaffected and published the mHyperETH exposure. On 21 Apr, it reopened the other Midas vaults while leaving mHyperETH paused. The 24 and 30 Apr updates described the supply queues and markets it had closed. On 27 May, Hyperithm published a full timeline and said its warning helped Kelp block a second drain. It later treated open supply queues as an attack path. No bad debt was published for its curated stablecoin vaults.
+source_urls:
+- https://www.linkedin.com/pulse/incident-report-rseth-exploit-via-layerzero-vulnerability-april-6ggvc
+- https://x.com/hyperithm/status/2046136627899302274
+- https://x.com/hyperithm/status/2046183477020918133
+- https://x.com/hyperithm/status/2046449747884736823
+- https://x.com/hyperithm/status/2047663530296692992
+- https://x.com/hyperithm/status/2049855556131959168
+- https://layerzero.network/publications/kelpdao-incident-report.pdf
+- https://oakresearch.io/en/analyses/investigations/kelp-dao-hack-full-picture-of-292-million-disaster
+- https://unchainedcrypto.com/kelpdao-hack-delays-but-doesnt-derail-tradfis-onchain-plans-morpho-ceo-unchained/
+- https://app.morpho.org/ethereum/vault/0x6D6D386C4855d9b604D7E14c70526407F6272394/hyperithm-eth-apex
+END_EVENT
+EVENT
+event_id: HYPERITHM-20260829-FORCEDEALLOC
+impact: N
+fault: direct
+type: ops
+status: resolved
+what_happened: |
+  On Morpho Vault V2, anyone can call forceDeallocate. The call moves assets from an adapter into the vault's idle pool. It does not take principal. If the penalty is zero or very small, a user can repeatedly trigger forceDeallocate, moving allocated assets to idle and causing temporary spikes in utilization and borrow rates. On Monad, Hyperithm USDC Apex uses a MorphoMarketV1 adapter with a forceDeallocate penalty of 0.001%. On 30 Aug 2026 at 03:01 UTC, Hyperithm posted about a sudden yield spike in the Monad aHYPER to USDC market.
+response: |
+  It left aHyper principal unaffected, that rates were back to normal, and that extra borrower interest would be refunded. On 4 Sep 2026 they refunded 8,586 USDC to 58 addresses for the window from 29 Aug 2026 at 14:29 UTC to 30 Aug 2026 at 02:54 UTC, which is 12.4 hours. They posted the calculation, the payout address on Monadscan, and a question form. They described the calls as malicious. The rate was brought back to normal by supply. As of 15 Sep 2026, the penalty on this adapter was still 0.001%.
+source_urls:
+- https://x.com/hyperithm/status/2093896863644839947
+- https://x.com/hyperithm/status/2095787569011454095
+- https://app.morpho.org/monad/market/0x9e8441e7af65860feac831ebc117473e3033321abf528ebc8fbde1eeaaa3a626/ahyper-usdc
+- https://app.morpho.org/monad/vault/0x78999cc96d2Ba0341588C60CcB0E91c6C33CF371/hyperithm-usdc-degen
+- https://docs.morpho.org/developers/contracts/morpho-vaults-v2/
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: JPEG Trading
+slug: jpeg-trading
+events: none
+END_CURATOR
+
+CURATOR
+name: K3 Capital
+slug: k3-capital
+EVENT
+event_id: K3-20251104-DEUSDUNWIND
+impact: High
+fault: indirect
+type: collateral
+status: unresolved
+what_happened: |
+  Stream Finance issued xUSD as a yield-bearing dollar token. Elixir issued deUSD as a synthetic dollar, with sdeUSD as its staked version. Around 3 to 4 Nov 2025, Stream Finance disclosed a loss at an external manager and halted withdrawals. Elixir then froze deUSD and later shut the token down after it lost its peg. The Block reported the shutdown on 6 Nov 2025. K3 had listed deUSD and sdeUSD on its Avalanche Euler cluster in May 2025 and still ran a vault denominated in deUSD, called K3 Capital Cluster. That vault later showed about $40k of value, against a peak of about 9.55M deUSD. Bankless, citing an Euler Discord screenshot from YAM, reported that K3 alleged a coordinated fraud, said Elixir had moved from basis trading into a Stream fund of funds without lender consent, served Philip Forte a cease and desist, and prepared a civil complaint. PANews, Odaily, and Gate, citing that same Discord chat and a person named Simeon, said K3 asked for 1:1 redemption on 3 Nov 2025, got no reply, forced a sale on 4 Nov 2025, and was left with about $2M of deUSD it could not redeem. Those outlets also said Elixir then told retail holders and liquidity providers they could claim 1:1 USDC, while curator vault balances would not.
+response: |
+  On 17 Mar 2026, Elixir launched a claim portal for lenders, noting a limited claim window. That same day, Bankless described an 80% offer for eligible lenders on Euler and Morpho, also noting K3 had not confirmed acceptance. As of now, K3 has not published proof that depositors were repaid. 17 Mar 2026 is the stated offer date. On the Euler compensation thread, depositors pointed out the K3 USDT vault (including rzo on 13 Nov 2025). Separately, a 1 Mar 2026 user reply claimed K3 had already distributed 80%, but this comment predated the formal claim portal.
+source_urls:
+- https://x.com/k3_capital/status/1925971437031965017
+- https://github.com/euler-xyz/euler-labels/blob/master/43114/products.json
+- https://app.euler.finance/api/public/metadata?chainId=43114&addresses=0xe1E549C965A4A0514D9bf80161D32924b8694822
+- https://x.com/elixir/status/2033922212986597612
+- https://x.com/eulerfinance/status/1989388982783025238
+- https://forum.euler.finance/t/request-for-a-formal-governance-proposal-regarding-compensation-for-users-affected-by-the-elixir-and-steam-labs-collapse/1708?page=2
+- https://www.theblock.co/news/markets/2025-11-06-elixir-sunsets-deusd-synthetic-stablecoin-following-stream-finance-unwinding-aims-full-redemptions-377961
+- https://www.bankless.com/read/news/k3-capital-threatens-legal-action-against-elixir-over-deusd-depeg
+- https://www.bankless.com/read/news/elixir-launches-usdc-recovery-portal-for-lenders-impacted-by-stream-insolvency
+- https://www.panewslab.com/en/articles/70acea07-20ed-4248-a02e-60542dd1fdf5
+- https://protos.com/stream-finance-meltdown-winners-and-losers-in-defi-risk-curator-reckoning/
+- https://tradingstrategy.ai/vaults/k3-capital-cluster-9
+- https://app.euler.finance/vault/0xe1E549C965A4A0514D9bf80161D32924b8694822?network=avalanche
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Keyring Network
+slug: keyring
+EVENT
+event_id: KEYRING-20251104-ELIXIR
+impact: High
+fault: direct
+type: collateral
+status: unresolved
+what_happened: |
+  Elixir was a liquidity network. deUSD was its synthetic dollar, and sdeUSD was the staked version. Keyring's Avalanche Euler vault opened for deUSD on 27 Oct 2025. By 31 Oct, users could lend deUSD and borrow against sdeUSD and other assets. On 4 Nov, Stream Finance disclosed an external-manager loss and halted withdrawals. Elixir's large loan to Stream impaired deUSD's backing. Elixir froze deUSD minting and redemption, then shut down deUSD and sdeUSD. Its liquidation integration also stopped working when Elixir disabled it.
+response: |
+  Euler posted incident guidance on 8 and 14 Nov. On 13 Nov, a depositor said the Keyring vault had taken a severe haircut but called an estimate of half or more unsettled. Keyring replied to the thread, opposed using Euler's treasury, and did not offer a refund. On 19 Nov, Euler said its contracts had operated as designed and that independent curators chose the collateral and price feeds. Keyring published no loss accounting or recovery plan. As of 26 Sep 2026, no post showed depositors had been paid, and the final haircut remained unknown.
+source_urls:
+- https://x.com/KeyringNetwork/status/1982892478249480311
+- https://x.com/KeyringNetwork/status/1984241663871762544
+- https://forum.euler.finance/t/request-for-a-formal-governance-proposal-regarding-compensation-for-users-affected-by-the-elixir-and-steam-labs-collapse/1708?page=2
+- https://x.com/eulerfinance/status/1987109954067587455
+- https://x.com/eulerfinance/status/1989388982783025238
+- https://www.theblock.co/post/377961/elixir-sunsets-deusd-synthetic-stablecoin-following-stream-finance-unwinding-aims-full-redemptions
+- https://www.bankless.com/read/news/elixir-launches-usdc-recovery-portal-for-lenders-impacted-by-stream-insolvency.md
+- https://app.euler.finance/?market=keyring-avalanche&network=avalanche
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Keyrock
+slug: keyrock
+events: none
+END_CURATOR
+
+CURATOR
+name: KPK
+slug: kpk
+EVENT
+event_id: KPK-20260322-RESOLV
+impact: N
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Resolv was a delta-neutral stablecoin protocol. USR was its dollar token, while RLP was the junior token meant to absorb losses first. On 22 Mar 2026 at 02:21:35 UTC, and again at 03:41 UTC, Resolv's compromised service role minted unbacked USR. The same day, KPK's changelog set RLP/USDC allocation caps to zero on USDC Yield on Ethereum and on Arbitrum, and removed Arbitrum syrupUSDC as a second order Resolv risk. On 23 Mar 2026 they moved the leftover RLP, updated the withdraw queue, and turned supply back on. On 4 Mar 2026 they had already removed PT-RLP-9APR2026 because it was underperforming, and they had kept spot RLP. Chaos Labs' tally at 1pm EST on 23 Mar, which is an exposure list and not a loss, put kpk Morpho USDC Yield Mainnet at about $222k.
+response: |
+  In a 25 Mar guest post, KPK said $222k was at risk across the Ethereum and Arbitrum Yield vaults, the live RLP allocation was 3.85% of vault assets, about $221k on Ethereum was recovered in the same block as a borrower repayment, and an Arbitrum leftover of about $1.1k was closed in a treasury batch. They said they were the first curator out of the RLP market, and that they do not use Morpho's Public Allocator. The recovery transaction hashes in that post were cut short and were not expanded here. KPK, Hypernative, and DL News said depositors lost nothing, the queue drained in the same block, and nobody stepped in by hand.
+source_urls:
+- https://docs.kpk.io/vaults/vaults/morpho/change-log.md
+- https://chaoslabs.xyz/posts/defi-s-contagion-loop-when-risk-curators-become-the-risk
+- https://resolv.xyz/blog/resolv-postmortem-march-22-2026-incident
+- https://docs.morpho.org/curate/concepts/security-considerations/
+- https://x.com/kpk_io/status/2035648055492358369
+- https://x.com/kpk_io/status/2036170798646349902
+- https://www.the-edge.xyz/p/when-collateral-fails
+- https://www.hypernative.io/blog/when-the-resolv-exploit-hit-kpks-depositors-lost-nothing
+- https://www.dlnews.com/articles/defi/kpk-declares-zero-loss-to-depositors-after-resolv-stablecoin-collapse/
+- https://forum.arbitrum.foundation/t/kpk-treasury-management-updates/30667
+- https://app.morpho.org/ethereum/vault/0x9178eBE0691593184c1D785a864B62a326cc3509/kpk-usdc-yield
+END_EVENT
+EVENT
+event_id: KPK-20260418-RSETH
+impact: N
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Kelp was a liquid restaking protocol, and rsETH was its restaked ETH token used as collateral. On 18 Apr 2026, a forged LayerZero message from Unichain to Ethereum released about 116,500 rsETH that Kelp's OFT bridge adapter did not have backing for. The attacker looped that unbacked rsETH as collateral on Aave, Compound, and Euler. That leveraged loop is not included in the impact to Gauntlet's Morpho allocations.
+response: |
+  On 18 Apr 2026 they paused USDC Prime, ETH Yield, and ETH Prime as a precaution. USDC Prime was turned back on the same day. On 20 Apr 2026 ETH Prime fully removed rsETH and savETH, the Aave linked holding, and turned deposits back on. On 22 Apr 2026 they turned back on markets they judged clear of Aave and rsETH spread. Exit transaction 0x01f34dc206943dcbe359f3916684d13e81811155f8ec6195e129ae25903db6ad moved 10.04 WETH from V1 ETH Prime through a shutdown agent. That 10.04 WETH is the size of the first batch. KPK said ETH Prime was the only curated Morpho vault with direct rsETH, capped at about 2.3% of vault assets. Their 10 Jun war room account says the alert came through a person first, the response call lasted about 20 minutes, and the first on chain exit was about 13 minutes later. They later claimed 97 new monitors and a forced rebalance in about 17 seconds. They left Morpho ETH Prime v2 and Aave USDS as a precaution, and netto.eth thanked them. KPK said no user funds were lost and the curated vaults had no unpaid debt.
+source_urls:
+- https://docs.kpk.io/vaults/vaults/morpho/change-log.md
+- https://kpk.io/blog/inside-the-war-room
+- https://etherscan.io/tx/0x01f34dc206943dcbe359f3916684d13e81811155f8ec6195e129ae25903db6ad
+- https://discuss.ens.domains/t/rseth-exploit-kpk-precautionary-actions-ens-endowment-impact-summary/22076
+- https://x.com/kpk_io/status/2045622576563818647
+- https://x.com/kpk_io/status/2046547936281055305
+- https://x.com/kpk_io/status/2049525030036353103
+- https://governance.aave.com/t/rseth-incident-report-april-20-2026/24580
+- https://app.morpho.org/ethereum/vault/0xd564F765F9aD3E7d2d6cA782100795a885e8e7C8/kpk-eth-prime
+END_EVENT
+EVENT
+event_id: KPK-20260609-CAPPAUSE
+impact: N
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Cap was a stablecoin credit protocol: cUSD was the main dollar token, and stcUSD its staked, yield-bearing version. According to KPK's automation log, on 9 Jun 2026 at 22:23 UTC, Cap paused cUSD. Hypernative and PagerDuty triggered almost immediately, prompting a soft shutdown that began withdrawing curator funds from stcUSD, DUSD, and srRoyUSDC markets, without formally setting caps to zero. The first withdrawal occurred within about 15 seconds. Existing market caps were left unchanged. Cap attributed the pause to a false positive related to MEV and lifted the pause after about 20 minutes. Shutdown flows were reversed as soon as a person manually reviewed the incident, so markets resumed without waiting for an automated contract delay. Transaction references in the incident log were truncated and not confirmed on chain. No official Cap post documented the pause, and the public Cap changelog has no 9 Jun entry, consistent with unchanged caps. Later, on 16 Jul 2026, USDC Yield removed stcUSD/USDC due to lost liquidity; that was a separate event. No loss number was posted for the incident.
+response: |
+  Markets were turned back on after a person reviewed them, without waiting for a contract delay to run out. The cited transaction hashes were cut short and were not confirmed on a block explorer. No Cap post for that timestamp was found. The changelog has no 9 Jun row, which fits caps that did not change. No loss.
+source_urls:
+- https://docs.kpk.io/vaults/infrastructure/automation.md
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: MEV Capital
+slug: mev-capital
+EVENT
+event_id: MEVCAPITAL-20250110-USD0ORACLE
+impact: N
+fault: direct
+type: oracle
+status: resolved
+what_happened: |
+  On 10 Jan 2025 MEV Capital said it learned the night before that Usual had changed early redemption for USD0++ (which made it to fall below 90 cents on Curve), with no advance notice. The Usual USDC vault had been supplying USDC into markets that priced USD0++ at a fixed about $1. MEV stopped new allocation into those markets and opened a market called USD0++ naked, priced at $0.87, so borrowers could move. The same day it suspended curator fees.
+response: |
+  The same day they paused fees and opened a lower priced market. Two days later they said lenders were safe and that fees would return. On 12 Jan it said the vault had not produced unpaid debt, lenders remained safe, and about 400k remained in the fixed price markets, under 0.2% of that vault. Users liked how MEV Capital managed the process. They said a fuller account would follow. Usual's Adli wrote on the Morpho forum that curators, including MEV, were told at the same time as everyone else, and that the fixed price markets would be replaced with markets priced at a floor. Commentators said a Usual co-founder's stake in MEV Capital was a conflict.
+source_urls:
+- https://x.com/MEVCapital/status/1877699650783687078
+- https://x.com/MEVCapital/status/1877744081045995970
+- https://x.com/MEVCapital/status/1878437031413502253
+- https://forum.morpho.org/t/usual-boosted-usdc-vault-whitelisting/686
+- https://www.coindesk.com/markets/2025/01/10/red-hot-de-fi-platform-usual-faces-backlash-as-protocol-update-triggers-sell-off
+- https://app.morpho.org/ethereum/vault/0xd63070114470f685b75B74D60EEc7c1113d33a3D/mev-capital-usdc
+END_EVENT
+EVENT
+event_id: MEVCAPITAL-20251105-STREAMXUSD
+impact: High
+fault: direct
+type: collateral
+status: unresolved
+what_happened: |
+  Stream Finance operated yield vaults, with xUSD as the yield-bearing dollar token used as collateral. On 5 Nov 2025, MEV Capital acknowledged Stream’s losses and stated its actively managed mainnet products had no direct Stream exposure, while specific permissionless vaults did. Affected positions included Silo Avalanche USDC (about $7.2M and 164.3 BTC.b), Morpho Arbitrum USDC (about $628k), Euler Sonic USDC (about $3.4M), and Euler Sonic scUSD (about $7.02M), all as point-in-time allocations. After Morpho's waiting period, on 13 Nov, MEV Capital removed the Arbitrum xUSD/USDC market and reported that vault locked in a loss of approximately 600,000 USDC, with total vault assets dropping from about $19.9M on 6 Nov to about $5.2M on 13 Nov. They clarified on 17 Mar 2026 that the loss was attributable to Stream, not Elixir. The 600,000 USDC represents the loss they stated for the Arbitrum vault; it is not independently recalculated from share price changes, which rose from roughly 1.019 to 1.024 during that period. Loss outcomes for the Euler and Silo exposures were not publicly detailed. DefiLlama continues to exclude the Arbitrum vault and two Silo Avalanche vaults from its asset totals due to unresolved Stream-related debt.
+response: |
+  The same day, they published the exposure list, adjusted parameters, and reached out to Stream’s legal counsel. Eight days later, the Arbitrum market was removed. They stated that lenders would be updated when new recovery details were available. No final resolution for Euler or Silo was found. Between 13 Nov 2025 and 26 Mar 2026, users continued to ask about Euler Sonic, Silo Avalanche, and Lista USDT; MEV responded with 'stay tuned' or 'it's coming', but no repayments were confirmed. The Arbitrum DRIP update reported roughly $700k in Morpho unpaid debt on the MEV Capital vault and removed it from DRIP rewards. The widely cited ~$25.4M exposure figure from Yields and More, echoed by The Block and BlockEden, is an exposure estimate, not a recovered amount. Protos reported a 12% haircut on Arbitrum (about 600,000 USDC vs. ~$5M), while the 3.5% figure pertains to Ethereum and is connected to the Elixir case.
+source_urls:
+- https://x.com/MEVCapital/status/1986038314642595857
+- https://x.com/MEVCapital/status/1989048013893812549
+- https://x.com/MEVCapital/status/2033944621655458159
+- https://forum.arbitrum.foundation/t/update-stream-finance-xusd-situation-and-impact-assessment/30206
+- https://protos.com/high-yields-to-haircuts-has-defi-learned-anything-from-yield-vault-collapse/
+- https://github.com/DefiLlama/DefiLlama-Adapters/blob/main/projects/mev-capital/index.js
+- https://x.com/O2debt/status/1988593353651576847
+- https://x.com/MEVCapital/status/2033936402472202339
+- https://x.com/MEVCapital/status/2037194072817803772
+- https://app.morpho.org/arbitrum/vault/0xa60643c90A542A95026C0F1dbdB0615fF42019Cf/mev-capital-usdc
+END_EVENT
+EVENT
+event_id: MEVCAPITAL-20251112-ELIXIRSDEUSD
+impact: Med
+fault: direct
+type: collateral
+status: unresolved
+what_happened: |
+  Elixir was a liquidity network, and deUSD was its synthetic dollar, with sdeUSD as the staked version. On 12 Nov MEV Capital said the Ethereum vault had removed the Elixir sdeUSD/USDC market and locked in unpaid debt equal to nearly 3.6% of vault assets at the time, and that it then had no Elixir exposure. No dollar figure was published. The weekly share price fell from about 1.121 on 6 Nov, when vault assets were about $109M, to about 1.085 on 13 Nov, when vault assets were about $46.6M.
+response: |
+  They posted the realized loss on 12 Nov, then sent a claim link on 17 Mar 2026. No MEV update said how much of the 3.6% was filled. A forum reply that the loss was redeemable is not a recovery figure.
+source_urls:
+- https://x.com/MEVCapital/status/1988581694476071222
+- https://x.com/MEVCapital/status/2033936402472202339
+- https://forum.morpho.org/t/usdc-vault-loss-mev-capital/2078
+- https://x.com/elixir/status/1986443495351927257
+- https://app.morpho.org/ethereum/vault/0xd63070114470f685b75B74D60EEc7c1113d33a3D/mev-capital-usdc
+END_EVENT
+EVENT
+event_id: MEVCAPITAL-20260322-RESOLVRLP
+impact: Low
+fault: indirect
+type: collateral
+status: unresolved
+what_happened: |
+  Resolv was a delta-neutral stablecoin protocol, with USR as its dollar-pegged token and RLP as its junior risk-absorbing token. On 22 Mar 2026, Resolv's mint key was compromised, resulting in the creation of unbacked USR. MEV Capital announced on 26 Mar that its Ethereum USDC vault had completely exited the RLP/USDC market after the required waiting period, removing a remaining position of about 47,000 USDC, representing less than 0.65% of the vault's assets at the time, and then reopened deposits. The approximately 47,000 USDC figure was specifically noted as the realized loss. From 26 Mar to 2 Apr, the vault's weekly share price declined from about 1.105 to 1.099. Separately, a Resolv USR vault maintained a weekly share price around 1.053 that week, while its assets dropped from about $140,000 to $59,000. DefiLlama excludes both that USR vault and a USD0 vault from its asset totals, attributing that to Resolv unpaid debt. MEV Capital has not published a realized US dollar loss figure for either vault.
+response: |
+  They posted the exit on 26 Mar 2026 and reopened deposits. Saying they were actively following up on 26 Mar 2026 is not a payment. It is not shown as paid. Chaos Labs' debrief listed MEV among smaller leftover names. An earlier reading put that line near $53k. OAK Research grouped MEV with other Morpho curators hit by the mint.
+source_urls:
+- https://x.com/MEVCapital/status/2037194072817803772
+- https://oakresearch.io/en/analyses/investigations/the-resolv-usr-hack-curators-face-their-responsibilities
+- https://github.com/DefiLlama/DefiLlama-Adapters/blob/main/projects/mev-capital/index.js
+- https://app.morpho.org/ethereum/vault/0xd63070114470f685b75B74D60EEc7c1113d33a3D/mev-capital-usdc
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Pangolins
+slug: pangolings
+events: none
+END_CURATOR
+
+CURATOR
+name: Re7 Labs
+slug: r7-capital
+EVENT
+event_id: R7-20250302-PYTHLAG
+impact: Low
+fault: direct
+type: oracle
+status: unresolved
+what_happened: |
+  On 2 Mar 2025, between 16:39:35 and 16:44:03 UTC, three positions in the Re7 curated Morpho Base cbETH/WETH market were liquidated for about 14 ETH. The market id is 0xd75387f30c983be0aec58b03b51cca52337b496e38cf4effbe995531bf34901c, and the liquidation threshold is 94.5%. The liquidation transactions are 0x90a2b7fd5d1e54bba73a20150f587d3c96eccdde2c858e8a9ab63976ba383a6c, 0xe33c71cefae58f1e0b5ae2dd8a6812d4c4364c40a576107e29fa54a2476e6860, and 0x77b2cf6989255f3d1cefef80fb81c6a85047afa08e08235527e120b5dfab348a. On the Morpho forum on 8 Mar 2025, Re7 Labs said this was not manipulation of the price feed. The last synced price at 16:36:55 UTC had cbETH/ETH about 1.091. A permissionless Pyth ETH/USD update at 16:39:33 UTC moved ETH/USD to $2,405.22 while cbETH/USD stayed at the prior price, so the on chain ratio fell to about 1.055 and crossed the 94.5% liquidation threshold. Spot cbETH/ETH had not lost its peg. The borrower, jameis, also forum user chicitybulls, said an instant liquidation of about 14 ETH, about $33k in that post. It is a borrower loss, not unpaid debt across the vault's shares. The borrower said the Pyth cbETH feed was easily manipulated. Re7, Pyth, and Morpho each pointed elsewhere.
+response: |
+  Re7 posted a review on the Morpho forum that it said was coordinated with Pyth. It promised tighter updates, and said it was looking at an independent scheduler, Pyth Pulse, and delay monitoring. It said the issue was isolated, and that no immediate change to this market or to markets with a similar price feed was required. It did not offer compensation. The borrower asked to be paid on 4 Mar 2025. Re7's 8 Mar 2025 review did not promise payment. No later payment was found. Blockworks reported that no one was paid.
+source_urls:
+- https://forum.morpho.org/t/pyth-cbeth-price-feed-is-easily-manipulated-resulted-in-me-losing-33000/1577/8
+- https://basescan.org/tx/0x90a2b7fd5d1e54bba73a20150f587d3c96eccdde2c858e8a9ab63976ba383a6c
+- https://app.morpho.org/base/market/0xd75387f30c983be0aec58b03b51cca52337b496e38cf4effbe995531bf34901c
+- https://blockworks.co/news/defi-accountability-morpho-pyth
+- https://app.morpho.org/base/vault/0x80D9964fEb4A507dD697b4437Fc5b25b618CE446/pyth-eth
+END_EVENT
+EVENT
+event_id: R7-20251104-STREAM
+impact: High
+fault: direct
+type: collateral
+status: unresolved
+what_happened: |
+  Stream Finance ran yield vaults, and xUSD was its yield-bearing dollar token. Re7's Euler Earn vault on Plasma lent USDT0 against xUSD in an isolated market that went live on 5 Oct 2025. After a drawdown on 10 Oct, Re7 found Stream borrowing USDT0 against its own xUSD but accepted assurances that the position was stable. By 29 Oct borrowing costs had risen, so Re7 contacted Stream again. Stream partly repaid the Plasma loan and returned $7M USDC on Worldchain. Re7 then pulled the liquidity it could, set the xUSD caps to zero, and removed the market from the Earn supply queue. On 4 Nov, Stream disclosed an external-manager loss of about $93M, froze deposits and withdrawals, and xUSD fell sharply. Re7's later recap put about $14.65M USDT0 in the isolated Plasma group. On 26 Sep 2026 the xUSD vault still showed about $14.3M of stated assets, a share price near 1.014, capped deposits, and an illiquidity warning. The share price and open-redemption label do not show that lenders could withdraw in full. No final haircut was published, but the unpaid loans and stuck liquidity remained a material economic loss.
+response: |
+  On 4 Nov, Re7 published an exposure note and cut the remaining caps. On 8 Nov, it published a longer recap and said it was working with external partners and legal advisers. On 21 Nov, Re7 said Pillsbury had served notices demanding repayment and preservation of evidence. Legal notices were not repayment, and Re7 did not promise to make depositors whole. On 30 Jun 2026, Stream opened a creditor-information form. That was a claims step, not a payout. As of 26 Sep 2026, 10 months and 22 days had passed since the loss disclosure, and no post showed lenders had been paid. Euler Labs said the protocol operated as designed and that its treasury would not make holders whole.
+source_urls:
+- https://www.coindesk.com/markets/2025/11/04/stream-finance-faces-usd93-million-loss-launches-legal-investigation
+- https://x.com/Re7Labs/status/1985694621251387506
+- https://x.com/Re7Labs/status/1987204592283832531
+- https://tradingstrategy.ai/vaults/0x39de0f00189306062d79edec6dca5bb6bfd108f9
+- https://tradingstrategy.ai/vaults/re7-labs-xusd
+- https://thedefiant.io/news/defi/stream-finance-starts-collecting-creditor-claims-in-step-toward-global-resolution
+- https://www.chaincatcher.com/en/article/2218539
+- https://app.euler.finance/vault/0xF675FBe777E992f5D5D84AdF41161dC0f20104a6?network=plasma
+END_EVENT
+EVENT
+event_id: R7-20251104-ELIXIR
+impact: High
+fault: direct
+type: collateral
+status: unresolved
+what_happened: |
+  Elixir was a liquidity network, and deUSD was its synthetic dollar, with sdeUSD as the staked version. Elixir's deUSD sat in Stream's circular lending, and deUSD and sdeUSD lost their peg the same week. On 21 Oct 2025 Elixir asked Re7 Labs for a $6M to $7M distribution limit on Euler Earn USDT0 on Plasma. Funds were borrowed, and the sdeUSD and deUSD markets went to 100% utilization. On 27 Oct 2025 Re7 decided the borrower was linked to Stream and started cutting exposure. By 6 Nov 2025, all borrows on Plume that used sdeUSD as collateral were repaid. Re7 put Elixir total impact near $13.974M. That impact figure is not the same as a depositor haircut. A later Re7 legal update said the Morpho Worldchain sdeUSD position was fully recovered and that treasury exposure was cut by more than half.
+response: |
+  After the Stream link was identified, Re7 cut caps and moved funds. Borrows on Plume were reported repaid on 6 Nov 2025. Residual Euler and Morpho positions were left with the Stream and Stables legal work. No Re7 pool to compensate Elixir depositors was found.
+source_urls:
+- https://www.chaincatcher.com/en/article/2218539
+- https://www.bitget.com/news/detail/12560605054194
+- https://app.euler.finance/earn/0xa5EeD1615cd883dD6883ca3a385F525e3bEB4E79?network=plasma
+- https://x.com/Re7Labs/status/1987204592283832531
+END_EVENT
+EVENT
+event_id: R7-20251106-USDX
+impact: High
+fault: indirect
+type: collateral
+status: unresolved
+what_happened: |
+  Stables Labs created USDX as a synthetic dollar and sUSDX as its yield-bearing, staked version. On 5 Jun 2025, Re7 launched its USD1 vault on Lista, which accepted USDX as collateral. In late October 2025, wallets associated with Stables Labs and Flex Yang used USDX and sUSDX as collateral to borrow stablecoins on Euler, Lista, and Silo, then sold those borrowed assets.
+response: |
+  On 4 Nov, Re7 contacted Stables Labs after spotting the Binance flows. It set a 5 Nov repayment deadline, then disabled borrowing and lowered liquidation thresholds and asked Lista to force liquidation when the response was not adequate. On 6 Nov, as USDX fell toward $0.30, Lista approved LIP-022 at Re7's request and forced liquidation of the USDX/USD1 market. The liquidation removed about 3.526M USDX and recovered about 2.927M USD1. About 2.090M USD1 of unpaid principal was moved to a public liquidation zone. After the 15 Nov snapshot, LIP-023 distributed liquidation profit proportionally to depositors. On 21 Nov, Lista said about 481,801 USD1 of liquidation profit would be distributed under LIP-023. That was profit, not repayment of principal. Re7's broader $13.114M impact figure also included Euler positions and was not a loss figure for this vault alone. As of 26 Sep 2026, the remaining loss was still open.
+source_urls:
+- https://blog.lista.org/the-re7-vault-forced-liquidation-a-recap-and-moving-forward
+- https://www.beosin.com/resources/analysis-of-the-stables-labs-usdx-collapse-incident-and-fund-flow-tracing
+- https://x.com/Re7Labs/status/1987204592283832531
+END_EVENT
+EVENT
+event_id: R7-20260322-RESOLV
+impact: High
+fault: indirect
+type: oracle
+status: unresolved
+what_happened: |
+  On 22 Mar 2026, a compromised Resolv service role minted unbacked USR, rapidly crashing the value of USR to as little as $0.025 on Curve. Re7 said it was aware of the exploit, reported zero mRe7YIELD exposure, and that only two small Morpho markets with USR collateral: Re7 USDC Base and Re7 USDC Core Mainnet were affected. Monitors reportedly fired at 02:46 UTC, and caps were set to zero with queues cleared by 03:00. The stated total for affected Re7 depositor claims is 223,000 USDC.
+response: |
+  On 10 Jun 2026, Re7 announced it had finalized a remediation framework with Resolv. On 22 Jun 2026, they stated that 223,000 USDC in recovery proceeds was claimable on Merkl by wallets in Re7 USDC Base or Re7 USDC Core Mainnet, based on a snapshot at market removal. However, users in public channels reported receiving only about a third of their invested amounts back and expressed dissatisfaction with the outcome.
+source_urls:
+- https://x.com/Re7Labs/status/2035770653261869480
+- https://x.com/Re7Labs/status/2064723385335112167
+- https://x.com/Re7Labs/status/2069005026769445148
+- https://docs.morpho.org/curate/concepts/security-considerations/
+- https://oakresearch.io/en/analyses/investigations/the-resolv-usr-hack-curators-face-their-responsibilities
+- https://thedefiant.io/news/defi/re7-labs-223k-usdc-compensation-pool-usr-exploit-victims
+- https://app.morpho.org/base/vault/0x12AFDeFb2237a5963e7BAb3e2D46ad0eee70406e/re7-usdc
+END_EVENT
+EVENT
+event_id: R7-20260904-VESU
+impact: Low
+fault: indirect
+type: oracle
+status: unresolved
+what_happened: |
+  On 4 Sep 2026 a Pragma price fault liquidated positions on Vesu.
+response: |
+  On 13 Sep 2026 Vesu said recovered assets are held by Vesu, Re7 Labs, and Clearstar, and that each curator refunds its own pool. Vesu's recommended rate was 95%. Pragma's 17 Sep 2026 note, still the latest section when read on 26 Sep 2026, says Vesu had not announced that every curator refund was finished. No Re7 post was found. Re7 holds recovered funds and was supposed to refund its pools. That refund is not shown as paid.
+source_urls:
+- https://docs.vesu.xyz/blog/2026-09-13-incident-refunds
+- https://www.pragma.build/updates/vesu-incident
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: RockawayX
+slug: rockawayx
+EVENT
+event_id: ROCKAWAYX-20260823-TERMDRAIN
+impact: N
+fault: indirect
+type: exploit
+status: resolved
+what_happened: |
+  Term Finance ran fixed-rate lending markets. RockawayX's Tori strategy held a Term position inside the Upshift Tori Ecosystem Vault. A 17 Aug 2026 snapshot showed about $45.98M in the vault and about $500,912 in the Term position. On 21 Aug, an attacker deposited 5 USDC, wrapped the entire voting supply of the Term strategy, and waited through the 49-hour minimum. The proposal removed the Zodiac delay, replaced key Term controllers with an attacker contract, set the reserve ratio to zero, and used a fake repo token with an attacker-set price. On 23 Aug at 06:47 UTC, the strategy pulled liquidity from MetaMorpho and lost 454,046.26 USDC. The loss was about 1.1% of the vault based on the earlier snapshot.
+response: |
+  At 09:23 UTC on 23 Aug, a user reported that Tori intended to cover the loss that day. RockawayX said at 12:02 UTC that the exposure had been fully covered. On 24 Aug, D2 Finance disputed parts of the method but did not identify an unpaid depositor. By 25 Aug, Term Labs had moved the leftover fixed-rate loans. A separate RockawayX Morpho vault, roxTORI, was not drained. RockawayX said the Term exposure had been removed and that the vault would not accept another integration of that kind.
+source_urls:
+- https://app.upshift.finance/pools/1/0xcd69123b3FBBfC666E1f6a501da27B564C00De54
+END_EVENT
+EVENT
+event_id: ROCKAWAYX-20260825-PTREUSD
+impact: N
+fault: indirect
+type: oracle
+status: resolved
+what_happened: |
+  On 25 Aug 2026, between approximately 04:37 and 04:51 UTC, the Morpho Blue PT-reUSD-10DEC2026/USDC market (address 0x1e9d614631a7df0ec07fb05b2c8cb2491575fd1a63a33bf187a6afb295a4fc64, 91.5% liquidation threshold) underwent large borrower liquidations totaling about $36.1M–$36.4M. No realized unpaid debt resulted. The market was deployed by Steakhouse Financial, which briefly withdrew then restored its own liquidity as a precaution; RockawayX did not deploy the market. RockawayX USDC Yield (roxUSDCy, 0xE0181090c22579B6A217f1522cbf8c9f1F0C1965) was and remains a top supplier. As of 15 Sep 2026, Morpho showed approximately $9.97M–$9.98M supplied from that vault, representing about 54% of its assets, with a $10M cap. At the pool level, DefiLlama reported no losses. No verified statement from RockawayX explicitly declared zero loss.
+response: |
+  Borrower liquidations concluded with zero unpaid debt. Steakhouse managed market liquidity throughout. There was no sourced evidence of a RockawayX recap, repayment, or cap adjustment. Two days after the Term incident, and still as of 15 Sep 2026, USDC Yield's exposure remained around 54% in the same 91.5% PT-reUSD position. CoinDesk and The Defiant both covered the liquidations. The Morpho dashboard showed the vault at about 54% utilization, with a roughly $10M cap and zero unpaid debt reported.
+source_urls:
+- https://app.morpho.org/ethereum/vault/0xE0181090c22579B6A217f1522cbf8c9f1F0C1965/rockawayx-usdc-yield
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Sentora
+slug: sentora
+events: none
+END_CURATOR
+
+CURATOR
+name: SharpByte Capital
+slug: sharpbyte
+events: none
+END_CURATOR
+
+CURATOR
+name: singularV
+slug: singularv
+EVENT
+event_id: SINGULARV-20260418-HGETH
+impact: N
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Kelp's High Growth vault used Upshift infrastructure. hgETH was its yield-bearing receipt token, backed mainly by leveraged rsETH strategies. SingularV ETH lent WETH against hgETH rather than raw rsETH. On 18 Apr 2026, Kelp's LayerZero rsETH route was drained. Aave and Kelp freezes then blocked repayment from the hgETH market.
+response: |
+  On 19 Apr, SingularV withdrew available liquidity and set the market's supply cap to zero. It said 491 ETH, or 38.2% of the vault, remained supplied and promised an investigation. Its 21 Apr and 30 Apr letters gave no numbered close-out. By 26 Sep, the vault no longer supplied the market. The market showed about 8.27 WETH of realized bad debt, but no source identified that amount as SingularV's loss. No refund or final close-out was published.
+source_urls:
+- https://x.com/SingularV_xyz/status/2045656067515076797
+- https://app.morpho.org/ethereum/vault/0x739d8a60ED4b14E4cB6DCAEAF79d2ec0Ca092237/singularv-eth
+- https://app.morpho.org/ethereum/market/0xec97655fab06b53bfad9d8c2358768aed5a1c97b204d3e51e2a7cb0cb786a264/hgeth-weth
+- https://x.com/SingularV_xyz/status/2046674591402414202
+- https://x.com/SingularV_xyz/status/2049693027724300729
+- https://forum.morpho.org/t/introduction-on-singularv/1893
+- https://www.panews.io/articles/019da49e-34c0-76c1-9e8e-3be5bcb0e6ae
+- https://curation.yearn.fi/report/kerneldao-hgeth/
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Steakhouse Financial
+slug: steakhouse-financial
+EVENT
+event_id: STEAKHOUSE-20241014-WMORACLE
+impact: N
+fault: direct
+type: oracle
+status: resolved
+what_happened: |
+  Steakhouse M V1 was a Morpho vault denominated in wM. It went live on 16 Aug 2024 while the product was still being set up. On 3 Sep, Steakhouse created wstETH/wM and WBTC/wM markets with the wrong price-feed decimals. The feeds overstated the collateral values by many orders of magnitude, so a borrower could have drained any vault allocated to them. Steakhouse traced the error to its market-creation scripts and a seed-position loan check that failed to display the problem. On 11 Oct, the vault's only depositor added 250,000 wM. The depositor withdrew the full 250,000 wM on 13 Oct, and Steakhouse removed the remaining liquidity from both markets on 13 and 14 Oct. Its 14 Oct account said no user funds were compromised and both markets had been removed from steakM. Morpho still shows the broken markets, but labels them unverified and shows no curator supplying them.
+response: |
+  Steakhouse detected the problem, notified the only depositor, and removed both markets after the depositor withdrew in full. Its 14 Oct account said future scripts would read token decimals from contracts, run checks before and after adding a market, and require another reviewer. On 29 Jun 2025, it published MetaOracleDeviationTimelock, an audited wrapper that starts from a reference price and only switches after a sustained gap. The broken markets still exist permissionlessly, but they are not a live Steakhouse allocation.
+source_urls:
+- https://forum.morpho.org/t/retrospective-wsteth-wm-wbtc-wm-market-oracle-configuration/878
+- https://app.morpho.org/ethereum/market/0xdf99a1e09b2a05d0f54a5fc4cc3de7ba9372eb0b7793cee58a18c385394bc05a
+- https://app.morpho.org/ethereum/market/0xcc6fbc7f375c5d8206667dd9b1beac424983b2a5c850f1d429499fcc574ddb6c
+- https://app.morpho.org/ethereum/vault/0xbEEf0075e03A5cE0D84d4ACcF3481363E0584F5c
+- https://depeg-monitor.webacy.co/vault-events/morpho-steakhouse-incident-2024
+- https://forum.morpho.org/t/retrospective-paxg-usdc-market-oracle-configuration/891
+END_EVENT
+EVENT
+event_id: STEAKHOUSE-20250221-BYBIT
+impact: N
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Ethena issued USDe, a synthetic dollar, with sUSDe as its staked yield-bearing version and Pendle principal tokens as fixed-term claims. On 21 Feb 2025, Steakhouse posted that Bybit was hacked around 14:16 UTC. By 15:49 UTC, after secondary market prices moved, bbqUSDC, where Ethena-linked collateral had been listed, automatically reallocated and reduced Ethena exposure to protect lenders. Bybit publicly acknowledged the hack at 15:51 UTC. At 15:53 UTC, Steakhouse opened a response call for basis products (USDe and USR) in Smokehouse vaults and stated that no Steakhouse product line vaults were exposed to these collaterals. Ethena posted at 16:16 UTC that its Bybit exposure was limited and at 17:12 UTC that it was zero. Resolv also posted no Bybit exposure at 16:25 UTC. Steakhouse reported that bbqUSDC exposure was stabilized and did not state any unpaid debt. The reported 'no loss' is Steakhouse's account, not an independently reconstructed result for bbqUSDC.
+response: |
+  Smokehouse USDC reallocated automatically before the public hack post. They opened a response call on basis trade collateral. They left the Prime line as it was because it was not exposed. No pause of steakUSDC or steakUSDT was reported. The same monitoring and reallocation showed up again in the April 2025 Kelp exit and the March 2026 Resolv exit.
+source_urls:
+- https://forum.morpho.org/t/bybit-incident-response/1544
+END_EVENT
+EVENT
+event_id: STEAKHOUSE-20250430-KELPMINT
+impact: N
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Kelp was a liquid restaking protocol, and rsETH was its restaked ETH token used as collateral. On 30 Apr 2025 at 06:16 UTC, a bug on Kelp enabled an infinite mint, resulting in about 1.69e16 rsETH being created. A technical update from Kelp at 10:55 UTC stated the incident would not result in extra insolvent rsETH reaching secondary markets.
+response: |
+  At 12:30 UTC Steakhouse's response call decided to delist rsETH while mints and withdrawals were closed and the news was volatile, because rsETH/ETH and rsETH/wstETH could move apart in secondary markets. At 12:31 UTC they removed available liquidity from the markets at risk, 18.4 ETH, which they called the exposure of the Smokehouse vaults. At 12:37 UTC they turned off the public allocator for those markets. They wrote that no Steakhouse curator vault still had exposure, notably bbqETH and bbqWSTETH. On 8 May 2025, after a review with Kelp, they judged Kelp's circuit breaker and response adequate. They said there was no immediate impact, that the exit was a precaution, and that an adverse market event ultimately did not occur.
+source_urls:
+- https://forum.morpho.org/t/kelp-incident-response/1727
+END_EVENT
+EVENT
+event_id: STEAKHOUSE-20260322-RESOLV
+impact: N
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Resolv was a delta-neutral stablecoin protocol. USR was its dollar token, while RLP was the junior token meant to absorb losses first. On 17 Mar 2026, Steakhouse published a Resolv risk report, announced it was hired as Resolv's risk manager, and deployed Steakhouse Resolv USR on Morpho. The vault lent USR against RLP at an 86% liquidation threshold. On 22 Mar, a compromised service-role key let an attacker mint unbacked USR.
+response: |
+  Steakhouse's monitoring detected a 1.61% USR/USDC gap at 02:21 UTC and began an automated unwind that it said finished by 03:02 UTC. The Morpho activity log still shows smaller moves from the RLP market at 03:05 and 11:14 UTC. On 23 Mar, Steakhouse reported zero losses, a peak allocation of $235,589, and no remaining exposure by 03:02. It also said it had never accepted RLP, although the dedicated USR vault had lent against RLP. A 26 Mar report gave the detailed timeline and said none of Steakhouse's vaults were among the material exposures flagged by Morpho.
+source_urls:
+- https://kitchen.steakhouse.financial/p/resolv-usr
+- https://kitchen.steakhouse.financial/p/defi-markets-update
+- https://app.morpho.org/ethereum/vault/0xbEEF8833f9Ff8e9D950Df3CEFb78DA88931C0450
+- https://www.linkedin.com/posts/steakhouse-financial_steakhouse-has-been-engaged-as-resolv-labs-activity-7439643885070381056-1rw9
+- https://x.com/SteakhouseFi/status/2035559831810249105
+- https://x.com/SteakhouseFi/status/2036066224598114435
+- https://x.com/SteakhouseFi/status/2033876832895046044
+- https://www.certik.com/blog/resolv-protocol-incident-analysis
+- https://hindenrank.com/blog/is-steakhouse-financial-safe
+- https://4pillars.io/en/issues/reflections-on-the-resolv-protocol-exploit
+- https://www.dlnews.com/articles/defi/resolv-hack-highlights-defi-risk-management-struggle/
+- https://x.com/PaulFrambot/status/2035822674728083906
+- https://x.com/BTCLIN/status/2035586051562152184
+END_EVENT
+EVENT
+event_id: STEAKHOUSE-20260330-DNSHIJACK
+impact: N
+fault: direct
+type: ops
+status: resolved
+what_happened: |
+  On 30 Mar 2026, an attacker gained control of the steakhouse.financial DNS after convincing OVHcloud support to remove hardware two-factor authentication. The attacker redirected address and name server records for both the main domain and the app subdomain to a cloned site containing a wallet drainer. Security researchers Blockaid and The Defiant identified the drainer as part of the Inferno and Angelferno family. Let's Encrypt certificates were issued for the phishing site, which was intermittently accessible for about four hours. The attacker also initiated a domain transfer, which triggered a five-day lock.
+response: |
+  Recaps of the account give these times: an unauthorized email change notice around 08:47 UTC, phishing live around 09:59 UTC, the OVH account reclaimed around 12:56 UTC, and DNS restored around 13:55 UTC. The vault contracts on Morpho do not depend on that domain. The team says no admin key can move depositor funds. Domains were restored on 31 Mar. The team said the sites were safe on 1 Apr. No user signed a malicious transaction, and that all depositor funds were safe. The same day, posts told users not to use the site or the email, and to use Morpho directly. The scope was OVH only. Google Workspace, GitHub, AWS, and DO were checked. They moved off the affected domain provider, moved the registrar, rotated credentials, and added DNS monitoring. Later posts described security hardening and rotation of owner and curator multisig keys.
+source_urls:
+- https://kitchen.steakhouse.financial/p/defi-markets-update-2026-04-06
+- https://x.com/SteakhouseFi/status/2038655268356051330
+- https://x.com/SteakhouseFi/status/2039370160549564763
+- https://x.com/SteakhouseFi/status/2042649690420724030
+- https://thedefiant.io/news/defi/steakhouse-financial-warns-users-of-phishing-attack
+- https://phemex.com/news/article/steakhouse-financial-confirms-dns-hijacking-funds-secure-69465
+- https://protos.com/steakhouse-financial-front-end-breach-exposes-users-to-phishing-scam/
+- https://app.steakhouse.financial/
+END_EVENT
+EVENT
+event_id: STEAKHOUSE-20260825-PTREUSD
+impact: Low
+fault: direct
+type: oracle
+status: resolved
+what_happened: |
+  On 25 Aug 2026, at approximately 04:30 UTC, Morpho Blue market 0x1e9d614631a7df0ec07fb05b2c8cb2491575fd1a63a33bf187a6afb295a4fc64 (PT-reUSD-10DEC2026 against USDC, 91.5% liquidation threshold, price feed 0x217d6DdCDB95112C51657F6270e8C079CFDB51f0) saw leveraged borrower liquidations after PT-reUSD fell about 3%. Steakhouse, which deployed the market, set the price feed to use the lower of a 15-minute PT average or a curve approaching $1 at maturity. Reported borrower liquidations were around $36.1M–$36.4M, but these figures do not represent losses to Steakhouse vaults. Both CoinDesk and NullTX report that Steakhouse stated lenders were unaffected and no unpaid debt resulted. reUSD itself remained unaffected. Following the incident, Steakhouse temporarily withdrew liquidity from the market for review before restoring it. RockawayX accounts confirm this sequence: Steakhouse deployed, briefly pulled, then restored liquidity, stating $0 realized unpaid debt.
+response: |
+  Steakhouse temporarily withdrew liquidity from the market as a precaution and later restored it. No Steakhouse vault suffered a haircut. Pendle stated the price feed functioned as intended and was set up correctly (per CoinDesk). Andrew Hong (Herd) described the event as a 2.6% manipulation of the PT-reUSD price feed, a claim summarized by NullTX. Both Pendle and Steakhouse maintained that the price feed operated as designed and that lenders did not incur losses. Public criticism centered on the price feed methodology and the 91.5% liquidation threshold chosen for the Steakhouse-deployed market.
+source_urls:
+- https://www.coindesk.com/tech/2026/08/25/a-3-token-move-just-triggered-usd36-million-in-ethereum-defi-liquidations
+- https://app.morpho.org/ethereum/market/0x1e9d614631a7df0ec07fb05b2c8cb2491575fd1a63a33bf187a6afb295a4fc64
+- https://nulltx.com/how-a-normal-oracle-move-wiped-out-36m-in-leveraged-positions
+- https://thedefiant.io/news/defi/pendle-oracle-move-liquidates-usd36-million
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Telos Consilium
+slug: telos
+EVENT
+event_id: TELOS-20251104-STREAM
+impact: High
+fault: direct
+type: collateral
+status: unresolved
+what_happened: |
+  Stream Finance ran yield vaults, and xUSD was its yield-bearing dollar token used as collateral. On 4 Nov 2025, Stream disclosed a $93M shortfall. TelosC's Euler markets had lent against Stream assets, leaving those markets exposed to the shortfall.
+response: |
+  TelosC had cut supply and borrow caps more than a day before the disclosure after seeing instability. On 5 Nov, it said it would try to limit losses. The affected Euler markets later reached full utilization, and lenders could not withdraw. On 7 Aug 2026, TelosC directed users to Stream's claim form. Filing did not confirm a right to payment, and no later TelosC post shows a payout.
+source_urls:
+- https://x.com/TelosConsilium/status/1985756355429613775
+- https://x.com/TelosConsilium/status/1986159759704121537
+- https://x.com/TelosConsilium/status/2085627281435930982
+- https://telosc.com/research/stables-pricing-guidelines
+- https://www.theblock.co/post/377491/analysts-map-285m-in-potential-exposure-across-defi-after-stream-finances-93m-loss
+- https://protos.com/stream-finance-meltdown-winners-and-losers-in-defi-risk-curator-reckoning/
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: UltraYield
+slug: ultrayield
+EVENT
+event_id: ULTRAYIELD-20250112-USD0PP
+impact: N
+fault: indirect
+type: collateral
+status: unresolved
+what_happened: |
+  Usual issued USD0 as a dollar token, and USD0++ was its locked, yield-bearing form used as collateral. On 12 Jan 2025, a change to the USD0++ redemption price reduced its value in strategies used by UltraYield-curated vaults.
+response: |
+  On 12 Jan, UltraYield said it had checked with Hashnote and that the underlying Treasury bill principal remained intact. It said it would adjust vault share prices and work with Usual. It later said the adjustment could be reversed if USD0++ recovered, but it did not publish a final share price or outcome.
+source_urls:
+- https://x.com/ultrayieldapp/status/1878370724529725485
+- https://x.com/ultrayieldapp/status/1878370726949830764
+- https://forum.morpho.org/t/ultrayield-usdc-vault-updates/1827
+END_EVENT
+EVENT
+event_id: ULTRAYIELD-20250508-FREEMINT
+impact: N
+fault: direct
+type: exploit
+status: resolved
+what_happened: |
+  ChainSecurity found a critical bug in UltraVault's mint function during a review of code received on 31 Mar 2025. If a mint was below the minimum or would exceed the deposit limit, previewMint returned zero assets, allowing a caller to receive shares without paying.
+response: |
+  UltraYield removed the limits in the 23 Apr fix. On 8 May, ChainSecurity marked the issue corrected. The report describes no live exploit or depositor loss.
+source_urls:
+- https://www.chainsecurity.com/security-audit/ultrayield-smart-contracts
+- https://reports.chainsecurity.com/Ultra/ChainSecurity_Ultra_UltraYield_Audit.pdf
+END_EVENT
+EVENT
+event_id: ULTRAYIELD-20251103-BALANCER
+impact: N
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Balancer was a decentralized exchange built around liquidity pools. On 3 Nov 2025, a Balancer exploit affected pools on multiple chains while UltraYield had a small exposure through positions on other chains.
+response: |
+  UltraYield exited the positions that day and said it took no loss. It also said the Edge Capital-curated Midas vaults mSYRUPUSDp, mEDGE, and mBASIS were unaffected.
+source_urls:
+- https://x.com/ultrayieldapp/status/1985289871993311603
+- https://x.com/ultrayieldapp/status/1985314152366342633
+END_EVENT
+EVENT
+event_id: ULTRAYIELD-20260322-RESOLV
+impact: N
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Resolv was a delta-neutral stablecoin protocol. USR was its dollar token, while RLP was the junior token meant to absorb losses first. On 22 Mar 2026, a compromised key was used to mint unbacked USR. UltraYield's exposure was indirect through Fluid USDT0 lending on Plasma.
+response: |
+  On 22 Mar, UltraYield said it had no direct Resolv exposure and that unbacked USR had not reached Plasma. It said mEDGE had no exposure, while mBASIS and msyrupUSDp had only the indirect Fluid exposure. On 24 Mar, it closed the Fluid positions and said depositors were not harmed.
+source_urls:
+- https://x.com/ultrayieldapp/status/2035808972314116335
+- https://x.com/ultrayieldapp/status/2035809700944425072
+- https://x.com/ultrayieldapp/status/2036396752496898302
+END_EVENT
+EVENT
+event_id: ULTRAYIELD-20260419-RSETH
+impact: Low
+fault: indirect
+type: collateral
+status: unresolved
+what_happened: |
+  Kelp was a liquid restaking protocol, and its High Growth vault issued hgETH backed mainly by rsETH strategies. On 19 Apr 2026, an rsETH bridge exploit exposed hgETH, one of UltraYield's curated products.
+response: |
+  On 19 Apr, UltraYield said its lending markets had no rsETH exposure and every curated vault except hgETH should be unaffected. It said it was waiting on Kelp and Aave to assess hgETH. A Yearn review dated 29 Jun measured the hgETH exchange rate at 0.9941 rsETH, down about 4.1% from 27 Apr, with deposits and withdrawals open. UltraYield did not publish a final impact or compensation plan, and did not show holders were made whole.
+source_urls:
+- https://x.com/ultrayieldapp/status/2045802874303619202
+- https://x.com/ultrayieldapp/status/2045802876887261598
+- https://ultrayield.gitbook.io/ultrayield/basics/currently-curated-vaults
+- https://curation.yearn.fi/report/kerneldao-hgeth/
+- https://kerneldao.com/kelp/gain/growth-vault/
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Varlamore Capital
+slug: valamore
+EVENT
+event_id: VALAMORE-20250806-STABILITY
+impact: Low
+fault: indirect
+type: collateral
+status: resolved
+what_happened: |
+  Stability ran managed yield vaults. wmetaUSD and wmetaS were wrapped shares in its MetaVaults, which used the Credix credit protocol. On 5 Aug 2025, a Credix exploit exposed the MetaVaults. Varlamore's Silo Sonic vaults allocated funds to wmetaUSD and wmetaS.
+response: |
+  On 6 Aug, Varlamore set the vgUSDC allocation to wmetaUSD to zero and cut the vS allocation to wmetaS to less than 1%. It said the situation was under control. No later Varlamore update gave a loss figure for this exposure.
+source_urls:
+- https://x.com/VarlamoreCap/status/1952933617921081494
+- https://x.com/stabilitydao/status/1952823589771854072
+END_EVENT
+EVENT
+event_id: VALAMORE-20251104-STREAM
+impact: High
+fault: direct
+type: collateral
+status: unresolved
+what_happened: |
+  Stream Finance ran yield vaults, and xUSD was its yield-bearing dollar token. Varlamore's USD Growth vaults lent into Silo markets that used xUSD as collateral. On 4 Nov 2025, Stream disclosed an external-manager loss and xUSD became undercollateralized. Redemptions closed. Silo markets still valued xUSD and xBTC at Stream's pre-loss exchange rate, so liquidations could not clear.
+response: |
+  On 4 Nov, Varlamore removed the xUSD markets from its supply queues, set caps to zero, and told users not to deposit. On 6 Nov, it promised to pursue recovery and directed depositors to Silo's form. On 20 Nov, a borrower repaid about $1.49M USDC into the Arbitrum market, allowing many users to withdraw part of their funds. The payment did not come from Varlamore's treasury. The remainder is not shown as paid, and no Varlamore post says depositors were made whole.
+source_urls:
+- https://x.com/VarlamoreCap/status/1985720425759064489
+- https://x.com/VarlamoreCap/status/1986290754688541003
+- https://silofinance.medium.com/stream-finance-incident-transparency-report-cc21fb76f0b5
+- https://x.com/SiloFinance/status/1991469688501727412
+- https://forum.arbitrum.foundation/t/update-stream-finance-xusd-situation-and-impact-assessment/30206
+- https://protos.com/stream-finance-meltdown-winners-and-losers-in-defi-risk-curator-reckoning/
+- https://web.archive.org/web/20260725010647/https://blog.summer.fi/lazy-summer-usdc-vault-exploit-post-mortem-what-happened-and-what-comes-next/
+END_EVENT
+EVENT
+event_id: VALAMORE-20260706-STALESHARES
+impact: N
+fault: indirect
+type: other
+status: unresolved
+what_happened: |
+  Lazy Summer's USDC vaults used modular strategies called arks. On 6 Jul 2026, an attacker donated Silo Varlamore USDC Growth tokens into an ark that was capped but still counted in the vault share value. Those tokens still reported their value from before the Stream loss, with interest accruing on stranded USDC. The donation therefore inflated the Lazy Summer vaults.
+response: |
+  Lazy Summer paused the vaults and published the post-mortem. It reported losses of about $5.64M and $0.40M for its own depositors, not for Varlamore's vault. Responsibility for the stale rate is disputed among Varlamore, Silo, and the integrator. No Varlamore response was found.
+source_urls:
+- https://web.archive.org/web/20260725010647/https://blog.summer.fi/lazy-summer-usdc-vault-exploit-post-mortem-what-happened-and-what-comes-next/
+- https://x.com/CertiKAlert/status/2074043519422099514
+- https://www.cryptotimes.io/2026/07/08/6m-lazy-summer-exploit-traces-back-to-novembers-stream-finance-collapse/
+- https://app.vaults.fyi/opportunity/mainnet/0x8399C8Fc273bD165C346Af74A02e65f10e4FD78F
+END_EVENT
+END_CURATOR
+
+CURATOR
+name: Waterline
+slug: waterline
+events: none
+END_CURATOR

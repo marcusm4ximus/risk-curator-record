@@ -1,0 +1,29 @@
+{
+  "name": "risk-curator-record",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "prepare-data": "node scripts/prepare.mjs",
+    "predev": "node scripts/prepare.mjs",
+    "prebuild": "node scripts/prepare.mjs",
+    "dev": "next dev -H 0.0.0.0 -p 38471",
+    "build": "next build",
+    "start": "next start -H 0.0.0.0 -p 38471",
+    "lint": "eslint"
+  },
+  "dependencies": {
+    "next": "16.3.6",
+    "react": "19.2.8",
+    "react-dom": "19.2.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.6",
+    "tailwindcss": "^4",
+    "typescript": "^5"
+  }
+}
