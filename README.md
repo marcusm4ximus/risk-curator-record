@@ -4,17 +4,18 @@ The code is under the MIT License. See [LICENSE](LICENSE). Copyright 2026 marcus
 
 Educational record of public curator incidents. The site is in `website/` and is served at `/riskcuratorrecord/`.
 
-Each curator folder holds `merged.md`, `profile.md`, `factcheck.md`, and `sources.csv`. The site reads `merged.md`, `website/data/plain-events.json`, and `website/data/curators.json`.
+Each curator folder under `curators/` holds `merged.md`, `profile.md`, `factcheck.md`, and `sources.csv`. The site reads `curators/<slug>/merged.md`, `website/data/plain-events.json`, and `website/data/curators.json`.
 
 ```
 curator-dd/
   LICENSE
   README.md
-  <slug>/
-    merged.md
-    profile.md
-    factcheck.md
-    sources.csv
-    incidents/
+  curators/
+    <slug>/
+      merged.md
+      profile.md
+      factcheck.md
+      sources.csv
+      incidents/
   website/
 ```

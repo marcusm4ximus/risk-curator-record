@@ -3,7 +3,9 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const ddRoot = path.resolve(root, "..");
+const ddRoot = process.env.CURATOR_DD_ROOT
+  ? path.resolve(process.env.CURATOR_DD_ROOT)
+  : path.resolve(root, "..", "curators");
 const plainEventsPath = path.join(root, "data", "plain-events.json");
 const identityPath = path.join(root, "data", "curators.json");
 const llmsPath = path.join(root, "public", "llms.txt");
@@ -147,7 +149,9 @@ function generateLlmsText() {
     for (const fields of events) {
       const id = fields.incident_id;
       if (!id) {
-        throw new Error(`Missing incident_id in ${slug}/merged.md EVENT block`);
+        throw new Error(
+          `Missing incident_id in curators/${slug}/merged.md EVENT block`,
+        );
       }
       if (includedEventIds.has(id)) {
         throw new Error(`Duplicate incident_id in merged.md files: ${id}`);

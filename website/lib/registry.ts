@@ -19,7 +19,7 @@ import type {
 const ROOT = process.cwd();
 const DD_DIR = process.env.CURATOR_DD_ROOT
   ? path.resolve(process.env.CURATOR_DD_ROOT)
-  : path.resolve(ROOT, "..");
+  : path.resolve(ROOT, "..", "curators");
 const IDENTITY_PATH = path.join(ROOT, "data", "curators.json");
 const PLAIN_PATH = path.join(ROOT, "data", "plain-events.json");
 

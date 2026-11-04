@@ -1,10 +1,10 @@
-The code in this folder is under the MIT License. See [../LICENSE](../LICENSE). Copyright 2026 marcusm4ximus. The incident text in the parent folders is an educational record curated by marcusm4ximus. That record is not part of the MIT grant.
+The code in this folder is under the MIT License. See [../LICENSE](../LICENSE). Copyright 2026 marcusm4ximus. The incident text in `../curators/` is an educational record curated by marcusm4ximus. That record is not part of the MIT grant.
 
 # Risk Curator Record
 
 A static registry of curator incidents. Pages live under `/riskcuratorrecord`.
 
-The site reads each curator `merged.md` in the parent folder, the prose in `data/plain-events.json`, and display names in `data/curators.json`. Keep that layout beside this folder when you install or build. After the build, `out/` is self-contained.
+The site reads each curator `merged.md` in `../curators/<slug>/`, the prose in `data/plain-events.json`, and display names in `data/curators.json`. Keep that layout beside this folder when you install or build. After the build, `out/` is self-contained.
 
 ## Run locally
 
