@@ -1,0 +1,58 @@
+name: Publish to website
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require website push token
+        env:
+          TOKEN: ${{ secrets.WEBSITE_PUSH_TOKEN }}
+        run: |
+          if [ -z "$TOKEN" ]; then
+            echo "::error::WEBSITE_PUSH_TOKEN is missing. The default GITHUB_TOKEN from risk-curator-record cannot push to marcusm4ximus/website."
+            echo "Create a fine-grained personal access token with Contents: Read and write on marcusm4ximus/website only."
+            echo "In marcusm4ximus/risk-curator-record, open Settings, Secrets and variables, Actions, and add a repository secret named WEBSITE_PUSH_TOKEN."
+            echo "Then re-run this workflow from the Actions tab. Do not put the token in the repository."
+            exit 1
+          fi
+
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: website/package-lock.json
+
+      - name: Install and build
+        working-directory: website
+        run: |
+          npm ci
+          npm run build
+
+      - name: Publish out/ to website/riskcuratorrecord
+        env:
+          TOKEN: ${{ secrets.WEBSITE_PUSH_TOKEN }}
+        run: |
+          rm -rf /tmp/website
+          git clone --depth 1 "https://github.com/marcusm4ximus/website.git" /tmp/website
+          rm -rf /tmp/website/riskcuratorrecord
+          mkdir -p /tmp/website/riskcuratorrecord
+          cp -a website/out/. /tmp/website/riskcuratorrecord/
+          git -C /tmp/website config user.name "marcusm4ximus"
+          git -C /tmp/website config user.email "marcusm4ximus@users.noreply.github.com"
+          git -C /tmp/website add -A riskcuratorrecord
+          if git -C /tmp/website diff --cached --quiet; then
+            echo "No site changes to publish."
+            exit 0
+          fi
+          git -C /tmp/website commit -m "Publish Risk Curator Record"
+          git -C /tmp/website push "https://x-access-token:${TOKEN}@github.com/marcusm4ximus/website.git" HEAD:main
