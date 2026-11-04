@@ -46,7 +46,7 @@ export function Shell({
 }) {
   const pathname = barePath(usePathname() || "/");
   const [query, setQuery] = useState("");
-  const [night, setNight] = useState(false);
+  const [night, setNight] = useState(true);
   const curators = data.curators;
 
   useEffect(() => {
@@ -126,7 +126,7 @@ export function Shell({
             </a>
             <a
               className="icon-btn"
-              href="https://github.com/marcusm4ximus"
+              href="https://github.com/marcusm4ximus/risk-curator-record"
               target="_blank"
               rel="noreferrer"
               aria-label="GitHub"

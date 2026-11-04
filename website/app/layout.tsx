@@ -3,7 +3,7 @@ import { Shell } from "@/components/shell";
 import { loadRegistry } from "@/lib/registry";
 import "./globals.css";
 
-const themeBoot = `try{if(localStorage.getItem("cws-theme")==="night"){document.documentElement.classList.add("night")}}catch(e){}`;
+const themeBoot = `try{if(localStorage.getItem("cws-theme")==="day"){document.documentElement.classList.remove("night")}else{document.documentElement.classList.add("night")}}catch(e){}`;
 
 export const metadata = {
   title: "Risk Curator Record",
@@ -13,7 +13,7 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   const data = loadRegistry();
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className="night" suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeBoot }} />
       </head>
